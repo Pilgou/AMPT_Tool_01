@@ -48,10 +48,11 @@ st.markdown(
 
 col1, col2 = st.columns(2)
 with col1:
-    st.image(os.path.join(current_path,"images","logoSCSystems.jpg"))#,width=200)
-
+    # st.image(os.path.join(current_path,"images","logoSCSystems.jpg"))#,width=200)
+    st.image(".\images\logoSCSystems.jpg")
 with col2:
-    st.image(os.path.join(current_path,"images","AMPT.jpg"),width=250)#,width=200)
+    # st.image(os.path.join(current_path,"images","AMPT.jpg"),width=250)#,width=200)
+    st.image(".\images\AMPT.jpg",width=250)
 
 tab1, tab2 = st.tabs(["Settings", "Projects"])
 
