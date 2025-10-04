@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<!-- saved from url=(0034)http://192.168.127.115:8080/modbus -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Required meta tags -->
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+
+    <title>Ampt Gen3CU</title>
+    <!-- Bootstrap -->
+    <link href="./Ampt Gen3CU_files/bootstrap.min.css" rel="stylesheet">
+    <link href="./Ampt Gen3CU_files/fontawesome-all.min.css" rel="stylesheet">
+
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" type="text/css" href="./Ampt Gen3CU_files/styles.css"> 
+<meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link rel="stylesheet" href="./Ampt Gen3CU_files/modbus.css"></head>
+
+  
+  
+   
+  
+
+
+  
+  <body>
+    
+<nav class="navbar navbar-expand-md navbar-dark bg-dark flex-column flex-md-row bd-navbar">
+<div class="container"> 	<!-- TESTING -->
+  <a class="navbar-brand" href="http://192.168.127.115:8080/modbus#">
+    <!-- <img src="/static/images/horizontal-slogan.png" height="30"> -->
+  </a>
+  <div class="navbar-nav-scroll">
+    <ul class="navbar-nav bd-navbar-nav flex-row">
+      <li class="nav-item ">
+        <a class="nav-link" href="http://192.168.127.115:8080/">Home</a>
+      </li>
+      <li class="nav-item ">
+        <a class="nav-link" href="http://192.168.127.115:8080/settings">Settings</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="http://192.168.127.115:8080/modbus">Modbus</a>
+      </li>
+      <li class="nav-item ">
+        <a class="nav-link" href="http://192.168.127.115:8080/download">Download</a>
+      </li>
+      <!-- li class="nav-item ">
+        <a class="nav-link" href="/status">Status</a>
+      </li>
+      <li class="nav-item ">
+        <a class="nav-link" href="/reboot">Reboot</a>
+      </li -->
+    </ul>
+  </div>
+  <ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
+    
+    <form class="form-inline">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="http://192.168.127.115:8080/modbus#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          admin
+        </a>
+        <div class="dropdown-menu dropdown-menu-right">
+          <a class="dropdown-item" href="http://192.168.127.115:8080/auth/change-password">Change Password</a>
+          <a class="dropdown-item" href="http://192.168.127.115:8080/auth/logout">Sign out</a>
+        </div>
+      </li>
+    </form>
+    
+  </ul>
+</div>
+</nav>
+
+    
+<div class="container">
+  
+  
+
+<div class="main-content">
+  <br><br>
+  <h2>Modbus Map</h2>
+  <div class="textblock">
+    <p>These Modbus maps are for your reference. 
+    The modbus service runs on port 502.</p>
+    <p>Important note: The Ampt ModBus register map uses big endian values.</p>
+    <p>
+      <a href="http://192.168.127.115:8080/download/smdx_64050.xml" download="">SunSpec SMDX File</a>
+    </p>
+  </div>
+  <p id="no_xml"></p>
+  <table id="table" class="table">
+    <caption>SunSpec Registers</caption>
+  <thead><tr class="table_header"><th class="table_header_cell">Start Offset</th><th class="table_header_cell">Size</th><th class="table_header_cell">Name</th><th class="table_header_cell">Type</th><th class="table_header_cell">R/W</th><th class="table_header_cell">Description</th></tr></thead><tbody><tr class="table_row"><td>1</td><td>2</td><td>SID</td><td>uint32</td><td>R</td><td>A well-known value 0x53756e53, uniquely identifies this as a SunSpec Modbus Map</td></tr><tr class="table_row"><td>3</td><td>1</td><td>ID</td><td>uint16</td><td>R </td><td>A well-known value 1, uniquely identifies this as a SunSpec Common Model</td></tr><tr class="table_row"><td>4</td><td>1</td><td>L</td><td>uint16</td><td>R </td><td>Well-known # of 16-bit registers to follow: 66</td></tr><tr class="table_row"><td>5</td><td>16</td><td>Manufacturer</td><td>string</td><td>R </td><td>A well-known value registered with SunSpec for compliance: Ampt</td></tr><tr class="table_row"><td>21</td><td>16</td><td>Model</td><td>string</td><td>R </td><td>Manufacturer specific value Communication Unit</td></tr><tr class="table_row"><td>37</td><td>8</td><td>Reserved</td><td>-</td><td>-</td><td></td></tr><tr class="table_row"><td>45</td><td>8</td><td>Version</td><td>string</td><td>R </td><td>Software Version</td></tr><tr class="table_row"><td>53</td><td>16</td><td>Serial Number</td><td>string</td><td>R </td><td>Manufacturer specific value</td></tr><tr class="table_row"><td>69</td><td>1</td><td>Device Address</td><td>int16</td><td>R/W </td><td>Modbus Device ID</td></tr><tr class="table_row"><td>71</td><td>1</td><td>ID</td><td>uint16</td><td>R </td><td>Ampt SunSpec Vendor Code 64050</td></tr><tr class="table_row"><td>72</td><td>1</td><td>L</td><td>uint16</td><td>R </td><td>Variable number of 16-bit registers to follow: 12 + N*16</td></tr><tr class="table_row"><td>73</td><td>1</td><td>DCA_SF</td><td>int16</td><td>R </td><td>Current scale factor</td></tr><tr class="table_row"><td>74</td><td>1</td><td>DCV_SF</td><td>int16</td><td>R </td><td>Voltage scale factor</td></tr><tr class="table_row"><td>75</td><td>1</td><td>Reserved</td><td>-</td><td>-</td><td></td></tr><tr class="table_row"><td>76</td><td>1</td><td>DCkWh_SF</td><td>int16</td><td>R </td><td>Energy Scale Factor</td></tr><tr class="table_row"><td>77</td><td>1</td><td>Reserved</td><td>-</td><td>-</td><td></td></tr><tr class="table_row"><td>78</td><td>1</td><td>N</td><td>uint16</td><td>R </td><td>Number of strings</td></tr><tr class="table_row"><td>79</td><td>6</td><td>Reserved</td><td>-</td><td>-</td><td></td></tr><tr class="table_row"><td colspan="6"></td></tr><tr class="table_row"><td>85</td><td>1</td><td>String ID</td><td>int16</td><td>R</td><td>The string number</td></tr><tr class="table_row"><td>86</td><td>2</td><td>Reserved</td><td>-</td><td>-</td><td></td></tr><tr class="table_row"><td>88</td><td>2</td><td>String data timestamp</td><td>uint32</td><td>R</td><td>The UTC timestamp of the measurements</td></tr><tr class="table_row"><td>90</td><td>1</td><td>OutDCA</td><td>int16</td><td>R</td><td>String output current in mA</td></tr><tr class="table_row"><td>91</td><td>2</td><td>OutDCV</td><td>uint32</td><td>R</td><td>String output voltage in mV</td></tr><tr class="table_row"><td>93</td><td>2</td><td>In1DCV</td><td>uint32</td><td>R</td><td>String input 1 voltage in mV</td></tr><tr class="table_row"><td>95</td><td>2</td><td>In2DCV</td><td>uint32</td><td>R</td><td>String input 2 voltage in mV</td></tr><tr class="table_row"><td>97</td><td>2</td><td>DCWh</td><td>uint32</td><td>R</td><td>Daily integrated string output energy in Wh</td></tr><tr class="table_row"><td>99</td><td>1</td><td>In1DCA</td><td>int16</td><td>R</td><td>String input 1 current in mA</td></tr><tr class="table_row"><td>100</td><td>1</td><td>In2DCA</td><td>int16</td><td>R</td><td>String input 2 current in mA</td></tr><tr class="table_row"><td colspan="6"></td></tr><tr class="table_row"><td>101</td><td>1</td><td>String ID</td><td>int16</td><td>R</td><td>The string number</td></tr><tr class="table_row"><td>102</td><td>2</td><td>Reserved</td><td>-</td><td>-</td><td></td></tr><tr class="table_row"><td>104</td><td>2</td><td>String data timestamp</td><td>uint32</td><td>R</td><td>The UTC timestamp of the measurements</td></tr><tr class="table_row"><td>106</td><td>1</td><td>OutDCA</td><td>int16</td><td>R</td><td>String output current in mA</td></tr><tr class="table_row"><td>107</td><td>2</td><td>OutDCV</td><td>uint32</td><td>R</td><td>String output voltage in mV</td></tr><tr class="table_row"><td>109</td><td>2</td><td>In1DCV</td><td>uint32</td><td>R</td><td>String input 1 voltage in mV</td></tr><tr class="table_row"><td>111</td><td>2</td><td>In2DCV</td><td>uint32</td><td>R</td><td>String input 2 voltage in mV</td></tr><tr class="table_row"><td>113</td><td>2</td><td>DCWh</td><td>uint32</td><td>R</td><td>Daily integrated string output energy in Wh</td></tr><tr class="table_row"><td>115</td><td>1</td><td>In1DCA</td><td>int16</td><td>R</td><td>String input 1 current in mA</td></tr><tr class="table_row"><td>116</td><td>1</td><td>In2DCA</td><td>int16</td><td>R</td><td>String input 2 current in mA</td></tr><tr class="table_row"><td colspan="6"></td></tr><tr class="table_row"><td>117</td><td>1</td><td>String ID</td><td>int16</td><td>R</td><td>The string number</td></tr><tr class="table_row"><td>118</td><td>2</td><td>Reserved</td><td>-</td><td>-</td><td></td></tr><tr class="table_row"><td>120</td><td>2</td><td>String data timestamp</td><td>uint32</td><td>R</td><td>The UTC timestamp of the measurements</td></tr><tr class="table_row"><td>122</td><td>1</td><td>OutDCA</td><td>int16</td><td>R</td><td>String output current in mA</td></tr><tr class="table_row"><td>123</td><td>2</td><td>OutDCV</td><td>uint32</td><td>R</td><td>String output voltage in mV</td></tr><tr class="table_row"><td>125</td><td>2</td><td>In1DCV</td><td>uint32</td><td>R</td><td>String input 1 voltage in mV</td></tr><tr class="table_row"><td>127</td><td>2</td><td>In2DCV</td><td>uint32</td><td>R</td><td>String input 2 voltage in mV</td></tr><tr class="table_row"><td>129</td><td>2</td><td>DCWh</td><td>uint32</td><td>R</td><td>Daily integrated string output energy in Wh</td></tr><tr class="table_row"><td>131</td><td>1</td><td>In1DCA</td><td>int16</td><td>R</td><td>String input 1 current in mA</td></tr><tr class="table_row"><td>132</td><td>1</td><td>In2DCA</td><td>int16</td><td>R</td><td>String input 2 current in mA</td></tr><tr class="table_row"><td colspan="6"></td></tr><tr class="table_row"><td>133</td><td>1</td><td>String ID</td><td>int16</td><td>R</td><td>The string number</td></tr><tr class="table_row"><td>134</td><td>2</td><td>Reserved</td><td>-</td><td>-</td><td></td></tr><tr class="table_row"><td>136</td><td>2</td><td>String data timestamp</td><td>uint32</td><td>R</td><td>The UTC timestamp of the measurements</td></tr><tr class="table_row"><td>138</td><td>1</td><td>OutDCA</td><td>int16</td><td>R</td><td>String output current in mA</td></tr><tr class="table_row"><td>139</td><td>2</td><td>OutDCV</td><td>uint32</td><td>R</td><td>String output voltage in mV</td></tr><tr class="table_row"><td>141</td><td>2</td><td>In1DCV</td><td>uint32</td><td>R</td><td>String input 1 voltage in mV</td></tr><tr class="table_row"><td>143</td><td>2</td><td>In2DCV</td><td>uint32</td><td>R</td><td>String input 2 voltage in mV</td></tr><tr class="table_row"><td>145</td><td>2</td><td>DCWh</td><td>uint32</td><td>R</td><td>Daily integrated string output energy in Wh</td></tr><tr class="table_row"><td>147</td><td>1</td><td>In1DCA</td><td>int16</td><td>R</td><td>String input 1 current in mA</td></tr><tr class="table_row"><td>148</td><td>1</td><td>In2DCA</td><td>int16</td><td>R</td><td>String input 2 current in mA</td></tr><tr class="table_row"><td colspan="6"></td></tr><tr class="table_row"><td>149</td><td>1</td><td>String ID</td><td>int16</td><td>R</td><td>The string number</td></tr><tr class="table_row"><td>150</td><td>2</td><td>Reserved</td><td>-</td><td>-</td><td></td></tr><tr class="table_row"><td>152</td><td>2</td><td>String data timestamp</td><td>uint32</td><td>R</td><td>The UTC timestamp of the measurements</td></tr><tr class="table_row"><td>154</td><td>1</td><td>OutDCA</td><td>int16</td><td>R</td><td>String output current in mA</td></tr><tr class="table_row"><td>155</td><td>2</td><td>OutDCV</td><td>uint32</td><td>R</td><td>String output voltage in mV</td></tr><tr class="table_row"><td>157</td><td>2</td><td>In1DCV</td><td>uint32</td><td>R</td><td>String input 1 voltage in mV</td></tr><tr class="table_row"><td>159</td><td>2</td><td>In2DCV</td><td>uint32</td><td>R</td><td>String input 2 voltage in mV</td></tr><tr class="table_row"><td>161</td><td>2</td><td>DCWh</td><td>uint32</td><td>R</td><td>Daily integrated string output energy in Wh</td></tr><tr class="table_row"><td>163</td><td>1</td><td>In1DCA</td><td>int16</td><td>R</td><td>String input 1 current in mA</td></tr><tr class="table_row"><td>164</td><td>1</td><td>In2DCA</td><td>int16</td><td>R</td><td>String input 2 current in mA</td></tr><tr class="table_row"><td colspan="6"></td></tr><tr class="table_row"><td>165</td><td>1</td><td>String ID</td><td>int16</td><td>R</td><td>The string number</td></tr><tr class="table_row"><td>166</td><td>2</td><td>Reserved</td><td>-</td><td>-</td><td></td></tr><tr class="table_row"><td>168</td><td>2</td><td>String data timestamp</td><td>uint32</td><td>R</td><td>The UTC timestamp of the measurements</td></tr><tr class="table_row"><td>170</td><td>1</td><td>OutDCA</td><td>int16</td><td>R</td><td>String output current in mA</td></tr><tr class="table_row"><td>171</td><td>2</td><td>OutDCV</td><td>uint32</td><td>R</td><td>String output voltage in mV</td></tr><tr class="table_row"><td>173</td><td>2</td><td>In1DCV</td><td>uint32</td><td>R</td><td>String input 1 voltage in mV</td></tr><tr class="table_row"><td>175</td><td>2</td><td>In2DCV</td><td>uint32</td><td>R</td><td>String input 2 voltage in mV</td></tr><tr class="table_row"><td>177</td><td>2</td><td>DCWh</td><td>uint32</td><td>R</td><td>Daily integrated string output energy in Wh</td></tr><tr class="table_row"><td>179</td><td>1</td><td>In1DCA</td><td>int16</td><td>R</td><td>String input 1 current in mA</td></tr><tr class="table_row"><td>180</td><td>1</td><td>In2DCA</td><td>int16</td><td>R</td><td>String input 2 current in mA</td></tr></tbody></table>
+  <br>
+</div> <!-- content div -->
+<div id="returndata"> </div>
+
+
+</div>
+  
+  <div style="background-color:rgba(0,0,0,0.2)"> 
+    <footer class="bg-dark py-3 my-4 footer">
+      <!-- ul class="nav justify-content-center border-bottom pb-3 mb-3">
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Ampt llc</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Gen3CU</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">IP Address</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Ampt Support</a></li>
+      </ul -->
+      <p class="text-center text-muted">© Copyright 2023 Ampt, LLC.</p>
+      <p class="text-center text-muted">v1.2.240531</p>
+    </footer>
+  </div>
+  
+
+
+
+    
+
+
+    <script src="./Ampt Gen3CU_files/jquery.min.js.téléchargement"></script>
+    <script src="./Ampt Gen3CU_files/popper.min.js.téléchargement"></script>
+    <script src="./Ampt Gen3CU_files/bootstrap.min.js.téléchargement"></script>
+
+<script type="text/javascript" src="./Ampt Gen3CU_files/modbus.js.téléchargement"></script>
+
+  
+
+</body></html>

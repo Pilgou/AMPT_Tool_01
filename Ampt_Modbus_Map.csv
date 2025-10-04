@@ -1,0 +1,33 @@
+Start/Offset,Size,Name,Type,R/W,Description
+1,2,SID,uint32,R,"A well-known value 0x53756e53, uniquely identifies this as a SunSpec Modbus Map"
+3,1,ID,uint16,R,"A well-known value 1, uniquely identifies this as a SunSpec Common Model"
+4,1,L,uint16,R,Well-known # of 16-bit registers to follow: 66
+5,16,Manufacturer,string,R,A well-known value registered with SunSpec for
+,,,,,compliance: Ampt
+21,16,Model,string,R,Manufacturer specific value Communication Unit
+37,8,Reserved,-,-,
+45,8,Version,string,R,Software Version
+53,16,Serial Number,string,R,Manufacturer specific value
+69,1,Device Address,int16,R/W,Modbus Device ID
+71,1,ID,uint16,R,Ampt SunSpec Vendor Code 64050
+72,1,L,uint16,R,Variable number of 16-bit registers to follow: 12 + N*16
+73,1,DCA_SF,int16,R,Current scale factor
+74,1,DCV_SF,int16,R,Voltage scale factor
+75,1,Reserved,-,-,
+76,1,DCkWh_SF,int16,R,Energy Scale Factor
+77,1,Reserved,-,-,
+78,1,N,uint16,R,Number of strings
+79,6,Reserved,-,-,
+,,,,,Ampt Gen3CU
+Offset,Size,Name,Type,R/W,Description
+95,2,In2DCV,uint32,R,String input 2 voltage in mV
+97,2,DCWh,uint32,R,Daily integrated string output energy in Wh
+99,1,In1DCA,int16,R,String input 1 current in mA
+100,1,In2DCA,int16,R,String input 2 current in mA
+,,,,,Ampt Gen3CU
+Offset,Size,Name,Type,R/W,Description
+141,2,In1DCV,uint32,R,String input 1 voltage in mV
+143,2,In2DCV,uint32,R,String input 2 voltage in mV
+145,2,DCWh,uint32,R,Daily integrated string output energy in Wh
+147,1,In1DCA,int16,R,String input 1 current in mA
+148,1,In2DCA,int16,R,String input 2 current in mA

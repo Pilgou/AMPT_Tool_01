@@ -1,0 +1,31 @@
+/* Standard Style Sheet */
+
+* {
+    font-family:Arial;
+    font-size:14px; 
+}
+
+h1 {
+    font-size:25px;
+}
+
+a.download { 
+    color:#0000FF; 
+}
+
+a.download:visited { 
+    color:#800080; 
+}
+
+a.download:hover { 
+    text-decoration:underline;
+}
+
+.footer {
+    /* grid-area: footer; */
+    flex-shrink: 0;
+}
+
+.row {
+    padding: 10px;
+}

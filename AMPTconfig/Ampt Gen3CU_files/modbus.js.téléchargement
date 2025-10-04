@@ -1,0 +1,138 @@
+$("#table").ready(function () {
+  dumpstructure().done(function(xml) {
+    tableInit(xml)
+  })
+})
+
+function dumpstructure() {
+  return $.ajax({
+    type: "GET",
+    url: "dumpstructure.lp",
+    dataType: "xml",
+    // success: tableInit
+  })
+}
+
+function generateTableHead(table, headings) {
+  const thead = table.createTHead()
+  const header_row = thead.insertRow()
+  header_row.className = "table_header"
+  for (let i = 0; i < headings.length; i++) {
+    const th = document.createElement("th")
+    th.className = "table_header_cell"
+    const text = document.createTextNode(headings[i])
+    th.appendChild(text)
+    header_row.appendChild(th)
+  }
+}
+
+function generateModbusBlock(tbody, reg_val) {
+  const data = [
+  [reg_val, 1, "String ID", "int16", "R", "The string number"],
+  [reg_val+1, 2, "Reserved", "-", "-", ""],
+  [reg_val+3, 2, "String data timestamp", "uint32", "R", "The UTC timestamp of the measurements"],
+  [reg_val+5, 1, "OutDCA", "int16", "R", "String output current in mA"],
+  [reg_val+6, 2, "OutDCV", "uint32", "R", "String output voltage in mV"],
+  [reg_val+8, 2, "In1DCV", "uint32", "R", "String input 1 voltage in mV"],
+  [reg_val+10, 2, "In2DCV", "uint32", "R", "String input 2 voltage in mV"],
+  [reg_val+12, 2, "DCWh", "uint32", "R", "Daily integrated string output energy in Wh"],
+  [reg_val+14, 1, "In1DCA", "int16", "R", "String input 1 current in mA"],
+  [reg_val+15, 1, "In2DCA", "int16", "R", "String input 2 current in mA"]
+  ];
+
+  for(var i = 0; i < data.length; i++) {
+    const modbus_row = tbody.insertRow()    // create successive rows for data
+    modbus_row.className = "table_row"
+    for(var j = 0; j < data[i].length; j++) {
+      const cell = modbus_row.insertCell()
+      cell.appendChild(document.createTextNode(data[i][j]))
+      modbus_row.appendChild(cell)
+    }
+    tbody.appendChild(modbus_row)
+  } 
+}
+
+function generateTableBody(table, string_names) {
+  const tbody = table.createTBody()
+
+  const modbus_info = [
+    [1, 2, "SID", "uint32", "R", "A well-known value 0x53756e53, uniquely identifies this as a SunSpec Modbus Map"],
+    [3, 1, "ID", "uint16", "R ", "A well-known value 1, uniquely identifies this as a SunSpec Common Model"],
+    [4, 1, "L", "uint16", "R ", "Well-known # of 16-bit registers to follow: 66"],
+    [5, 16, "Manufacturer", "string", "R ", "A well-known value registered with SunSpec for compliance: Ampt"],
+    [21, 16, "Model", "string", "R ", "Manufacturer specific value Communication Unit"],
+    [37, 8, "Reserved", "-", "-", ""],
+    [45, 8, "Version", "string", "R ", "Software Version"],
+    [53, 16, "Serial Number", "string", "R ", "Manufacturer specific value"],
+    [69, 1, "Device Address", "int16", "R/W ", "Modbus Device ID"],
+    [71, 1, "ID", "uint16", "R ", "Ampt SunSpec Vendor Code 64050"],
+    [72, 1, "L", "uint16", "R ", "Variable number of 16-bit registers to follow: 12 + N*16"],
+    [73, 1, "DCA_SF", "int16", "R ", "Current scale factor"],
+    [74, 1, "DCV_SF", "int16", "R ", "Voltage scale factor"],
+    [75, 1, "Reserved", "-", "-", ""],
+    [76, 1, "DCkWh_SF", "int16", "R ", "Energy Scale Factor"],
+    [77, 1, "Reserved", "-", "-", ""],
+    [78, 1, "N", "uint16", "R ", "Number of strings"],
+    [79, 6, "Reserved", "-", "-", ""],
+  ];
+
+  for(var i = 0; i < modbus_info.length; i++) {
+    const modbus_row = tbody.insertRow()    // create successive rows for data
+    modbus_row.className = "table_row"
+    for(var j = 0; j < modbus_info[i].length; j++) {
+      const cell = modbus_row.insertCell()
+      cell.appendChild(document.createTextNode(modbus_info[i][j]))
+      modbus_row.appendChild(cell)
+    }
+    tbody.appendChild(modbus_row)
+  } 
+
+  var reg_val = 85        // Hardcoded value for modbus register start
+  for(var i = 0; i < string_names.length; i++) {
+    const name_row = tbody.insertRow()        // Create a row for the string name
+    name_row.className = "table_row"
+    const name_cell = document.createElement("td")
+    name_cell.appendChild(document.createTextNode(name))
+    name_cell.colSpan = 6
+    name_row.appendChild(name_cell)
+    tbody.appendChild(name_row)
+
+    generateModbusBlock(tbody, reg_val)         // This will fill the row with cells containing correct data
+    reg_val += 16
+  }
+}
+
+function tableInit (xml) {
+  // var table = $("#request_result");
+
+  if (!xml) {
+    $("#no_xml").get(0).innerHTML = "No layout file found." // eslint-disable-line max-len
+    return
+  }
+
+  const headings = ["Start Offset", "Size", "Name", "Type", "R/W", "Description"]
+  const table = document.querySelector("table")
+  table.id = "table"
+  // Generate Table Head:
+  generateTableHead(table, headings)
+  
+  // Generate String names:
+  var string_names = []
+  // Trying simplified method
+  /*
+  $(this).find("String").each(function() {
+    string_names.push($(this).attr("name"))
+  })
+  */
+  console.log(string_names)
+  $(xml).find("Station").each(function() {
+    $(this).find("Inverter").each(function() {
+      $(this).find("String").each(function() {
+        string_names.push($(this).attr("name"))
+      })
+    })
+  })
+  // Generate Table Body:
+  // Start with Modbus Information:
+  generateTableBody(table, string_names)
+}

@@ -1,0 +1,16 @@
+{
+    "seuil_quasi_zero": 1e-06,
+    "colonnes_a_surveiller": [
+        "OutDCV_1",
+        "OutDCV_2",
+        "OutDCV_3",
+        "OutDCV_4",
+        "OutDCV_5",
+        "OutDCV_6"
+    ],
+    "affichage": {
+        "theme": "dark",
+        "couleur_warning": "orange",
+        "couleur_error": "red"
+    }
+}
