@@ -11,11 +11,10 @@ import streamlit as st
 import os
 import pandas as pd
 import sys
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+# sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from FileManagement import file_mng_fct as fm
 from TimeManagement import DeltaTime
 from Sidebar import side_bar as sb
-
 import re
 import matplotlib.pyplot as plt
 
@@ -196,4 +195,4 @@ if not st.session_state.df_carlo.empty:
         st.line_chart(st.session_state.df_carlo_Voltage_plot)
 
 # Display common part of Sidebar
-sb.common_part()
+sb.common_part(file = st.session_state.AMPT_file_loaded, state = st.session_state.rawdata_data_file_state)

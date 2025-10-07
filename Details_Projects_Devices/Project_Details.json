@@ -1,0 +1,20 @@
+{
+  "models": ["V850", "V875", "V900", "V925", "V950", "V975", "V1000"],
+  "Electrical": {
+    "Input": {
+      "Maximum voltage per input (V)": [1000, 1000, 1000, 1000, 1000, 1000, 1000],
+      "Maximum current (Imp) per input (A)": [12.8, 12.8, 12.8, 12.8, 12.8, 12.8, 12.8],
+      "Maximum short-circuit current (Isc) per input (A)": [13.5, 13.5, 13.5, 13.5, 13.5, 13.5, 13.5],
+      "MPP tracking voltage range (V)": ["190-900", "190-900", "190-900", "190-900", "190-900", "190-900", "190-900"],
+      "Startup voltage per input (V)": [400, 400, 400, 400, 400, 400, 400],
+      "Number of inputs": [2, 2, 2, 2, 2, 2, 2]
+    },
+    "Output": {
+      "Output voltage range (V)": ["0-850", "0-875", "0-900", "0-925", "0-950", "0-975", "0-1000"],
+      "Maximum output voltage at full power (V)": [760, 785, 810, 835, 860, 885, 910],
+      "Output voltage at zero power (V)": [850, 875, 900, 925, 950, 975, 1000],
+      "Maximum output current (A)": [13.5, 13.5, 13.5, 13.5, 13.5, 13.5, 13.5],
+      "Maximum continuous output power (kWdc)": [10.2, 10.5, 10.9, 11.2, 11.5, 11.9, 12.2]
+    }
+  }
+}

@@ -47,14 +47,14 @@ st.markdown(
 
 
 col1, col2 = st.columns(2)
-with col1:
-    # st.image(os.path.join(current_path,"images","logoSCSystems.jpg"))#,width=200)
-    st.image(".\images\logoSCSystems.jpg")
-with col2:
-    # st.image(os.path.join(current_path,"images","AMPT.jpg"),width=250)#,width=200)
-    st.image(".\images\AMPT.jpg",width=250)
+# with col1:
+#     # st.image(os.path.join(current_path,"images","logoSCSystems.jpg"))#,width=200)
+#     st.image(".\images\logoSCSystems.jpg")
+# with col2:
+#     # st.image(os.path.join(current_path,"images","AMPT.jpg"),width=250)#,width=200)
+#     st.image(".\images\AMPT.jpg",width=250)
 
-tab1, tab2 = st.tabs(["Settings", "Projects"])
+tab1, tab2, tab3 = st.tabs(["Settings", "Projects", "Optimizers"])
 
 with tab1:
 
@@ -117,3 +117,63 @@ with tab1:
             
 with tab2:
     st.write("Different projects description")
+    
+with tab3:
+    # --- Charger le JSON ---
+    with open(".\Details_Projects_Devices\AMPT_Datasheet.json", "r") as f:
+        datasheet = json.load(f)
+
+    # --- Extraire la liste des modèles ---
+    models = datasheet["models"]
+
+    st.markdown("<h2 style='color:orange;'>⚙️ Select AMPT</h2>", unsafe_allow_html=True)
+    
+    # --- Sélection par défaut : "V900" ---
+    default_index = models.index("V900") if "V900" in models else 0
+    
+    # --- Sélecteur radio horizontal ---
+    selected_model = st.radio(
+        "Choose model :", 
+        models, 
+        horizontal=True,
+        index=default_index,  # 👈 ici le modèle V900 est pré-sélectionné
+        key="model_selector"
+    )
+
+    # --- Trouver l'index du modèle sélectionné ---
+    index = models.index(selected_model)
+
+    # --- Récupérer les données ---
+    input_data = datasheet["Electrical"]["Input"]
+    output_data = datasheet["Electrical"]["Output"]
+
+    # --- Affichage stylé ---
+    st.markdown(
+        f"""
+        <div style="
+            border: 3px solid orange;
+            border-radius: 12px;
+            padding: 20px;
+            background-color: #1e1e1e;
+            margin-top: 20px;">
+            <h3 style="color:orange;">DataSheet : <span style="color:white;">{selected_model}</span></h3>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    # --- Disposition en deux colonnes ---
+    col1, col2 = st.columns(2)
+
+    # INPUT
+    with col1:
+        st.markdown("<h4 style='color:#ffa500;'>Input</h4>", unsafe_allow_html=True)
+        for key, values in input_data.items():
+            st.markdown(f"<p style='color:white;'>• <b>{key}</b> : {values[index]}</p>", unsafe_allow_html=True)
+
+    # OUTPUT
+    with col2:
+        st.markdown("<h4 style='color:#ffa500;'>Output</h4>", unsafe_allow_html=True)
+        for key, values in output_data.items():
+            st.markdown(f"<p style='color:white;'>• <b>{key}</b> : {values[index]}</p>", unsafe_allow_html=True)
+
