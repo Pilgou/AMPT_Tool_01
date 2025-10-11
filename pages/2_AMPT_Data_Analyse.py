@@ -67,7 +67,6 @@ sb.common_part()
 st.title ("AMPT-CU Data Analyse")
 st.markdown(" On this page : AMPTs time series are evaluate ")
 
-
 # col10, col11 = st.columns([1,3])
 # with col10:
 #     AMPT_selector = st.radio("Model",("V900 i13.5", "Optimizer 2"))
@@ -149,7 +148,10 @@ with tab2:
         # st.session_state.checkbox_Statistics_dftab_2 = st.checkbox("Outputs Statistics",
         #                                                        value=st.session_state.get(""),
         #                                                        help="")
-        st.session_state.checkbox_Anomalies_dftab_2 = st.checkbox("Search for anomalies on voltages",
+        st.session_state.checkbox_Anomalies_dftab_2 = st.checkbox("Search for anomalies on voltages from basic statistics",
+                                                               value=st.session_state.get(""),
+                                                               help="")
+        st.session_state.checkbox_Anomalies_datasheet_dftab_2 = st.checkbox("Search for anomalies / AMPT datasheet",
                                                                value=st.session_state.get(""),
                                                                help="")
 

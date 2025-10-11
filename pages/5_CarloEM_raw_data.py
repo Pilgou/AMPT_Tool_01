@@ -191,7 +191,7 @@ if not st.session_state.df_carlo_Voltage_plot.empty:
         # Decrire les valeurs std...
         st.write(st.session_state.df_carlo_Voltage_plot.describe())
 
-    st.session_state.checkbox_df_carlo = st.checkbox("Display RawData",value=st.session_state.get(""),help="Display DataFrame")
+    st.session_state.checkbox_df_carlo = st.checkbox("Display EM RawData",value=st.session_state.get(""),help="Display DataFrame")
     st.session_state.checkbox_Curves_df_carlo = st.checkbox("Display Voltage EM Curves",value=st.session_state.get(""),help="Voltage")
 
 if not st.session_state.df_carlo.empty:

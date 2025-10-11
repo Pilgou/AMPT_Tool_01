@@ -6,7 +6,7 @@ Created on Tue Sep 23 19:54:18 2025
 """
 
 import streamlit as st
-
+import re
 
 # def common_part(file:str, state:bool):
 def common_part():
@@ -28,3 +28,32 @@ def common_part():
         else:
             st.sidebar.error(f"{st.session_state.EM_file_loaded}")
         
+    # --- Fonction pour extraire la partie numérique ---
+    def extract_number(s):
+        match = re.search(r"\d+", s)
+        return match.group() if match else None
+    
+    # --- Vérification de la présence des deux variables ---
+    if (
+        "AMPT_file_loaded" in st.session_state
+        and "EM_file_loaded" in st.session_state
+        and st.session_state.AMPT_file_loaded
+        and st.session_state.EM_file_loaded
+    ):
+        ampt_str = st.session_state.AMPT_file_loaded
+        em_str = st.session_state.EM_file_loaded
+    
+        ampt_num = extract_number(ampt_str)
+        em_num = extract_number(em_str)
+    
+        # st.write(f"🔹 AMPT : `{ampt_str}`")
+        # st.write(f"🔹 EM   : `{em_str}`")
+    
+        if ampt_num != em_num:
+            print("je suis dans cette condition")
+            st.sidebar.warning("⚠️ Les dates des fichiers AMPT et EM ne correspondent pas !")
+        else:
+            st.sidebar.write("✅ same date")
+    
+    # else:
+    #     st.info("ℹ️ En attente du chargement des deux fichiers (AMPT et EM).")

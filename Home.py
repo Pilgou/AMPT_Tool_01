@@ -10,6 +10,16 @@ import streamlit as st
 import os
 import json
 
+if "input_AMPTdatasheet" not in st.session_state:
+    st.session_state.input_AMPTdatasheet = {}
+
+if "output_AMPTdatasheet" not in st.session_state:
+    st.session_state.output_AMPTdatasheet = {}
+
+if "indexModel" not in st.session_state:
+    st.session_state.indexModel = 2
+
+
 st.title ("DC Tools suite")
 
 st.markdown(
@@ -128,24 +138,25 @@ with tab3:
 
     st.markdown("<h2 style='color:orange;'>⚙️ Select AMPT</h2>", unsafe_allow_html=True)
     
-    # --- Sélection par défaut : "V900" ---
-    default_index = models.index("V900") if "V900" in models else 0
+    # # --- Sélection par défaut : "V900" ---
+    # default_index = models.index("V900") if "V900" in models else 0
     
     # --- Sélecteur radio horizontal ---
     selected_model = st.radio(
         "Choose model :", 
         models, 
         horizontal=True,
-        index=default_index,  # 👈 ici le modèle V900 est pré-sélectionné
+        index=st.session_state.indexModel,  # 👈 ici le modèle V900 est pré-sélectionné
         key="model_selector"
     )
 
     # --- Trouver l'index du modèle sélectionné ---
-    index = models.index(selected_model)
+    st.session_state.indexModel = models.index(selected_model)
+    print(st.session_state.indexModel)
 
     # --- Récupérer les données ---
-    input_data = datasheet["Electrical"]["Input"]
-    output_data = datasheet["Electrical"]["Output"]
+    st.session_state.input_AMPTdatasheet = datasheet["Electrical"]["Input"]
+    st.session_state.output_AMPTdatasheet = datasheet["Electrical"]["Output"]
 
     # --- Affichage stylé ---
     st.markdown(
@@ -168,12 +179,12 @@ with tab3:
     # INPUT
     with col1:
         st.markdown("<h4 style='color:#ffa500;'>Input</h4>", unsafe_allow_html=True)
-        for key, values in input_data.items():
-            st.markdown(f"<p style='color:white;'>• <b>{key}</b> : {values[index]}</p>", unsafe_allow_html=True)
+        for key, values in st.session_state.input_AMPTdatasheet.items():
+            st.markdown(f"<p style='color:white;'>• <b>{key}</b> : {values[st.session_state.indexModel]}</p>", unsafe_allow_html=True)
 
     # OUTPUT
     with col2:
         st.markdown("<h4 style='color:#ffa500;'>Output</h4>", unsafe_allow_html=True)
-        for key, values in output_data.items():
-            st.markdown(f"<p style='color:white;'>• <b>{key}</b> : {values[index]}</p>", unsafe_allow_html=True)
+        for key, values in st.session_state.output_AMPTdatasheet.items():
+            st.markdown(f"<p style='color:white;'>• <b>{key}</b> : {values[st.session_state.indexModel]}</p>", unsafe_allow_html=True)
 
