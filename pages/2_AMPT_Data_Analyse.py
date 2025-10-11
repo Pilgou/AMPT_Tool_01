@@ -51,6 +51,11 @@ if "checkbox_energyAMPT" not in st.session_state:
 
 if "form_submit_button_trace" not in st.session_state:
     st.session_state.form_submit_button_trace = False
+    
+if "form_submit_button_traceInputs" not in st.session_state:
+    st.session_state.form_submit_button_traceInputs = False
+
+    
 
 
 # Display common part of Sidebar
@@ -113,14 +118,12 @@ with tab1:
         et optimizer via ses datas :  
             OutDCA / OutDCV / In1DCV / In2DCV / DCWh / In1DCA / In2DCA   
             
-            
+            Description :
             OutDCA : S'il ny à pas charge = 0  
             OutDCV : Tension de sortie de AMPT  
             In1DCV : Tension PV string 1  
             In2DCV : Tension PV string 2  
             ...
-    Le courant étant dépendant de la charge, intuitivement la premiere analyse 
-    portera sur les données en Tension
 
     __Postulat 1__ :  
         La tension d'entrée de l'optimizer (In.DCV) depend de l'état des PVs
@@ -164,7 +167,6 @@ with tab2:
                         unsafe_allow_html=True
                     )
     
-                # st.session_state.checkbox_Curves_df1 = st.checkbox("Display Outputs Curves",value=st.session_state.get(""),help="OutDCV_x")
         
                 columns_list = (list(st.session_state.df.columns))
                 # print(columns_list)
@@ -214,7 +216,7 @@ with tab2:
                 start_time = time_values[start_idx]
                 end_time = time_values[end_idx]
                 
-                # Filtrer DataFrame
+                # Filtrer DataFrame sur une plage de temps
                 st.session_state.df_filtre = st.session_state.df[(st.session_state.df["time"] >= start_time) & (st.session_state.df["time"] <= end_time)]
                 
                 st.write(f"⏱ Range selected : {start_time} → {end_time}")
@@ -416,8 +418,79 @@ with tab2:
                     st.success("Saved !")
       
 with tab3:
-    st.markdown("Analyse 2")
-    # st.image("https://static.streamlit.io/examples/owl.jpg", width=200)
+    st.markdown("""__Analyse 2__  
+                Oriented PV (strings) diagnostic from AMPT's Inputs   
+                👉 Visualization of optimizer inputs  
+                👉 Analyses on Inputs""")
+    st.divider()
+    
+    if not st.session_state.df.empty:
+        st.session_state.checkbox_Curves_dftab_3 = st.checkbox("Inputs Curves",
+                                                               value=st.session_state.get(""),
+                                                               help="InDCV, InDCA, Power")
+        st.session_state.checkbox_Anomalies_dftab_3 = st.checkbox("Search for anomalies on strings",
+                                                               value=st.session_state.get(""),
+                                                               help="")
+    st.divider()
+    
+    if st.session_state.checkbox_Curves_dftab_3:
+        with st.form(key = "Inputs_Analyse"):
+    
+            columns_list = (list(st.session_state.df.columns))
+            # print(columns_list)
+            inputs_voltage_columns_list = [col for col in columns_list if "In1DCV" in col]
+            # print(output_voltage_columns_list)
+            inputs_current_columns_list = [col for col in columns_list if "In1DCA" in col]
+            # output_power_columns_list = [col for col in columns_list if "In_Power" in col]
+           
+            col1, col2, col3, col4 = st.columns(4)
+            with col1:
+                st.write("Select In1DCV..")               
+                # Sélection dynamique des courbes avec checkbox
+                st.session_state.in1DCV = [col for col in inputs_voltage_columns_list if st.checkbox(col, value=False)]
+            with col2:
+                st.write("Select In1DCA..")               
+                # Sélection dynamique des courbes avec checkbox
+                st.session_state.in1DCA = [col for col in inputs_current_columns_list if st.checkbox(col, value=False)]
+            # with col3:
+            #     st.write("Select InPower..")               
+            #     # Sélection dynamique des courbes avec checkbox
+            #     st.session_state.selection_p = [col for col in output_power_columns_list if st.checkbox(col, value=False)]
+            # with col4:
+            #     st.write("Others")
+            st.session_state.form_submit_button_traceInputs = st.form_submit_button(label = "Trace")
+
+            if not st.session_state.df.empty:
+                
+                if st.session_state.form_submit_button_traceInputs:
+            
+                    fusion_v_in1 = ["timestamp"] + st.session_state.in1DCV
+                    fusion_a_in1 = ["timestamp"] + st.session_state.in1DCA
+                    # fusion_p = ["timestamp"] + st.session_state.selection_p
+                    
+                    if st.session_state.in1DCA == st.session_state.in1DCV:
+                        st.warning("No datas selected !")
+                    
+                    if st.session_state.df_filtre.empty:
+                       st.session_state.df_filtre = st.session_state.df 
+                       
+                    # Affichage des colonnes choisies
+                    # Voltage per optimizer
+                    if st.session_state.in1DCV !=[]:
+                        # st.write("✅ Colonnes sélectionnées")
+                        # st.write(fusion)
+                        st.write("📈 In1DCV Voltage")
+                        st.line_chart(st.session_state.df_filtre[fusion_v_in1], x="timestamp")
+                    # Amps per optimizer 
+                    if st.session_state.in1DCA !=[]:
+                        st.write("📊 In1DCA Current")
+                        st.line_chart(st.session_state.df_filtre[fusion_a_in1], x="timestamp")
+                    # Power per optimizer
+                    if st.session_state.selection_p !=[]:
+                        st.write("📊 In1_Power")
+                        st.line_chart(st.session_state.df_filtre[fusion_p], x="timestamp")
+
+
     
     
     
