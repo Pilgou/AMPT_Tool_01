@@ -24,6 +24,9 @@ if "df_carlo" not in st.session_state:
     
 if "AMPT_file_loaded" not in st.session_state:
     st.session_state.AMPT_file_loaded = ""
+    
+if "EM_file_loaded" not in st.session_state:
+    st.session_state.EM_file_loaded = ""
 
 if "rawdata_data_file_state" not in st.session_state:    
     st.session_state.rawdata_data_file_state = []
@@ -59,7 +62,7 @@ if "form_submit_button_traceInputs" not in st.session_state:
 
 
 # Display common part of Sidebar
-sb.common_part(file = st.session_state.AMPT_file_loaded, state = st.session_state.rawdata_data_file_state)
+sb.common_part()
 
 st.title ("AMPT-CU Data Analyse")
 st.markdown(" On this page : AMPTs time series are evaluate ")

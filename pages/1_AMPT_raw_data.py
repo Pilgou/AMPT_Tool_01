@@ -36,14 +36,21 @@ if "checkbox_df" not in st.session_state:
 if "AMPT_file_loaded" not in st.session_state:
     st.session_state.AMPT_file_loaded = ""
 
+if "EM_file_loaded" not in st.session_state:
+    st.session_state.EM_file_loaded = ""
+
 if "checkbox_Curves_df" not in st.session_state:
     st.session_state.checkbox_Curves_df = False
     
 if "data_file_to_load_carlo" not in st.session_state:
     st.session_state.data_file_to_load_carlo = ""
 
-if "rawdata_data_file_state" not in st.session_state:    
-    st.session_state.rawdata_data_file_state = []
+if "rawdata_AMPT_data_file_state" not in st.session_state:    
+    st.session_state.rawdata_AMPT_data_file_state = False
+    
+if "rawdata_EM_data_file_state" not in st.session_state:    
+    st.session_state.rawdata_EM_data_file_state = False
+
 
 def btn_displayDataframe():
     st.dataframe(st.session_state.df)
@@ -192,10 +199,10 @@ if not st.session_state.df_OutDCV_plot.empty:
             
         if st.session_state.df.isnull().values.any():
             st.error("❌ Le DataFrame contient des valeurs manquantes (None ou NaN).")
-            st.session_state.rawdata_data_file_state = True
+            st.session_state.rawdata_AMPT_data_file_state = True
         else:
             st.success("✅ Aucune valeur manquante détectée.")
-            st.session_state.rawdata_data_file_state = False
+            st.session_state.rawdata_AMPT_data_file_state = False
 
 
             
@@ -250,4 +257,5 @@ if not st.session_state.df.empty:
         st.line_chart(st.session_state.df_OutDCV_plot)
 
 # Display common part of Sidebar
-sb.common_part(file = st.session_state.AMPT_file_loaded, state = st.session_state.rawdata_data_file_state)
+# sb.common_part(file = st.session_state.AMPT_file_loaded, state = st.session_state.rawdata_AMPT_data_file_state)
+sb.common_part()

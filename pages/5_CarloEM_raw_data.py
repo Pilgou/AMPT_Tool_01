@@ -33,14 +33,21 @@ if "form_submit_button_carlo" not in st.session_state:
 if "checkbox_df_carlo" not in st.session_state:
     st.session_state.checkbox_df_carlo = False
 
-if "data_file_to_load_carlo" not in st.session_state:
-    st.session_state.data_file_to_load_carlo = ""
-
 if "checkbox_Curves_df_carlo" not in st.session_state:
     st.session_state.checkbox_Curves_df_carlo = False
     
-if "data_file_to_load" not in st.session_state:
-    st.session_state.data_file_to_load = ""
+if "AMPT_file_loaded" not in st.session_state:
+    st.session_state.AMPT_file_loaded = ""
+    
+if "EM_file_loaded" not in st.session_state:
+    st.session_state.EM_file_loaded = ""
+    
+if "rawdata_AMPT_data_file_state" not in st.session_state:    
+    st.session_state.rawdata_AMPT_data_file_state = []
+
+if "rawdata_EM_data_file_state" not in st.session_state:    
+    st.session_state.rawdata_EM_data_file_state = []
+
 
 def btn_displayDataframe_carlo():
     st.dataframe(st.session_state.df_carlo)
@@ -84,20 +91,22 @@ if len(csv_file_list_name_carlo) > 0:
 else:
     st.subheader("No csv file(s) found")
     
-# Dans une "form" creation du selecteur de fihier et du bouton de chargement    
+# Dans une "form" creation du selecteur de fichier et du bouton de chargement    
 with st.form(key = "source_selector_carlo"):
-    st.session_state.data_file_to_load_carlo = st.selectbox("Select data source", file_list_name_carlo)
+    data_file_to_load_carlo = st.selectbox("Select data source", file_list_name_carlo,  
+                                           index=len(file_list_name_carlo) - 1)  #  dernier élément)
     st.session_state.form_submit_button_carlo = st.form_submit_button(label = "Load")
 
 # Lecture du CSV
 if st.session_state.form_submit_button_carlo:
-    if ".csv" in st.session_state.data_file_to_load_carlo:
+    if ".csv" in data_file_to_load_carlo:
         # load csv file and convert it to dataframe
-        st.session_state.df_carlo = pd.read_csv(f'./CSV/{st.session_state.data_file_to_load_carlo}')
+        st.session_state.df_carlo = pd.read_csv(f'./CSV/{data_file_to_load_carlo}')
         # st.metric(label="Rows", value = len(df))
-               
+        st.session_state.EM_file_loaded = data_file_to_load_carlo
+             
         st.subheader("General information about the file")
-        st.write(f"from {st.session_state.data_file_to_load_carlo}")
+        st.write(f"from {data_file_to_load_carlo}")
         # Assuming that this timestamp is in milliseconds
         # format the timestamp column
         st.session_state.df_carlo['timestamp'] = pd.to_datetime(st.session_state.df_carlo['timestamp'], unit='ms')
@@ -162,6 +171,14 @@ if not st.session_state.df_carlo_Voltage_plot.empty:
             st.write(f"{duration.seconds//60} mn")
             st.write(a)
             st.write(max_nb_carlo)
+            
+        if st.session_state.df_carlo.isnull().values.any():
+            st.error("❌ Le DataFrame contient des valeurs manquantes (None ou NaN).")
+            st.session_state.rawdata_EM_data_file_state = True
+        else:
+            st.success("✅ Aucune valeur manquante détectée.")
+            st.session_state.rawdata_EM_data_file_state = False
+
 
     with st.expander(f"ex : First statistics on the {max_nb_carlo} EM's voltage Measurement"):        
         # Display stats
@@ -195,4 +212,4 @@ if not st.session_state.df_carlo.empty:
         st.line_chart(st.session_state.df_carlo_Voltage_plot)
 
 # Display common part of Sidebar
-sb.common_part(file = st.session_state.AMPT_file_loaded, state = st.session_state.rawdata_data_file_state)
+sb.common_part()
