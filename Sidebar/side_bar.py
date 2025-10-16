@@ -8,6 +8,9 @@ Created on Tue Sep 23 19:54:18 2025
 import streamlit as st
 import re
 
+if "iconDate" not in st.session_state:
+    st.session_state.iconDate = ""
+    
 # def common_part(file:str, state:bool):
 def common_part():
 
@@ -50,10 +53,7 @@ def common_part():
         # st.write(f"🔹 EM   : `{em_str}`")
     
         if ampt_num != em_num:
-            print("je suis dans cette condition")
             st.sidebar.warning("⚠️ Les dates des fichiers AMPT et EM ne correspondent pas !")
         else:
             st.sidebar.write("✅ same date")
     
-    # else:
-    #     st.info("ℹ️ En attente du chargement des deux fichiers (AMPT et EM).")

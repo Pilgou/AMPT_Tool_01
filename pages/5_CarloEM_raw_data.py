@@ -130,47 +130,45 @@ if st.session_state.form_submit_button_carlo:
 if not st.session_state.df_carlo_Voltage_plot.empty:
     with st.container(border=True):
         # Premier index
-        startDate = st.session_state.carlo_serie1.index[0] 
+        st.session_state.EM_startDate = st.session_state.carlo_serie1.index[0] 
         # second index
-        secondDate = st.session_state.carlo_serie1.index[1]
+        EM_secondDate = st.session_state.carlo_serie1.index[1]
         # Dernier index
-        endDate = st.session_state.carlo_serie1.index[-1]
+        st.session_state.EM_endDate = st.session_state.carlo_serie1.index[-1]
         # duration = endDate - startDate
         # or
-        duration = st.session_state.df_carlo['timestamp'].max() - st.session_state.df_carlo['timestamp'].min()
-        sampling = secondDate - startDate
-        # Determiner le nombre d'optimizer a partir du nombre de colonnes dans dataframe
+        st.session_state.EM_duration = st.session_state.df_carlo['timestamp'].max() - st.session_state.df_carlo['timestamp'].min()
+        st.session_state.EM_sampling = EM_secondDate - st.session_state.EM_startDate
+        # Determiner le nombre d'EM a partir du nombre de colonnes dans dataframe
         # liste des colonnes
-        # nombre de valeurs par AMPT
+        # nombre de valeurs par EM
         colonnes = st.session_state.df_carlo.columns.tolist()
         # st.write(colonnes)
-        print(colonnes)
         # Extraire les chiffres  si présents
         # Extraire tous les nombres présents
-        numbers = [int(re.search(r'\d+', col).group()) for col in colonnes if re.search(r'\d+', col)]
-        print(numbers)        
+        EM_numbers = [int(re.search(r'\d+', col).group()) for col in colonnes if re.search(r'\d+', col)]
         # Compter les numéros distincts
         # nb_diff = len(set(chiffres))
         # Localiser la valeur Max
-        max_nb_carlo = (max(set(numbers)))
+        EM_max_nb_carlo = (max(set(EM_numbers)))
 
         col3, col4 = st.columns(2)
         with col3:
             st.write("Start")
             st.write("End")
-            sampling_s = (sampling.seconds)
+            st.session_state.EM_sampling_s = (st.session_state.EM_sampling.seconds)
             st.write("Sampling")
             st.write("Recording time (mn)")
-            a = DeltaTime.format_delta(startDate, endDate)
+            st.session_state.EMdeltatimeHM = DeltaTime.format_delta(st.session_state.EM_startDate, st.session_state.EM_endDate)
             st.write("Recording time (H:MN")
             st.write("EM number")
         with col4:
-            st.write( startDate)
-            st.write( endDate)
-            st.write(f"{sampling_s} s")
-            st.write(f"{duration.seconds//60} mn")
-            st.write(a)
-            st.write(max_nb_carlo)
+            st.write(st.session_state.EM_startDate)
+            st.write(st.session_state.EM_endDate)
+            st.write(f"{st.session_state.EM_sampling_s} s")
+            st.write(f"{st.session_state.EM_duration.seconds//60} mn")
+            st.write(st.session_state.EMdeltatimeHM)
+            st.write(EM_max_nb_carlo)
             
         if st.session_state.df_carlo.isnull().values.any():
             st.error("❌ Le DataFrame contient des valeurs manquantes (None ou NaN).")
@@ -180,7 +178,7 @@ if not st.session_state.df_carlo_Voltage_plot.empty:
             st.session_state.rawdata_EM_data_file_state = False
 
 
-    with st.expander(f"ex : First statistics on the {max_nb_carlo} EM's voltage Measurement"):        
+    with st.expander(f"ex : First statistics on the {EM_max_nb_carlo} EM's voltage Measurement"):        
         # Display stats
         # st.subheader(f"ex : First statistics on the {nb_diff} AMPT's voltage outputs")
         # statistiques par series

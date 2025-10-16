@@ -252,7 +252,7 @@ if not st.session_state.df.empty:
     if st.session_state.checkbox_df:
         # st.dataframe(st.session_state.df)
         st.dataframe(df2)
-        print(df2.iloc[0:5])
+        # print(df2.iloc[0:5])
     if st.session_state.checkbox_Curves_df:
         st.line_chart(st.session_state.df_OutDCV_plot)
 

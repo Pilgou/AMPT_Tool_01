@@ -28,8 +28,8 @@ if "AMPT_file_loaded" not in st.session_state:
 if "EM_file_loaded" not in st.session_state:
     st.session_state.EM_file_loaded = ""
 
-if "rawdata_data_file_state" not in st.session_state:    
-    st.session_state.rawdata_data_file_state = []
+if "rawdata_AMPT_data_file_state" not in st.session_state:    
+    st.session_state.rawdata_AMPT_data_file_state = []
 
 if "df_OutDCV_plot" not in st.session_state:
     st.session_state.df_OutDCV_plot = pd.DataFrame()
@@ -99,7 +99,7 @@ if not st.session_state.df_OutDCV_plot.empty:
                 st.write(f"{st.session_state.ampt_duration.seconds//60} mn")
             with col7:
                 st.write(f"Sampling : {st.session_state.ampt_sampling_s} s")
-                if st.session_state.rawdata_data_file_state == True:
+                if st.session_state.rawdata_AMPT_data_file_state == True:
                     st.markdown("❌ Raw data file error")
 
 
@@ -198,11 +198,11 @@ with tab2:
                     st.session_state.checkbox_energyAMPT = st.checkbox("Energy")
                     st.session_state.checkbox_All_AMPT_Power = st.checkbox("Total Power")
                     
+                st.session_state.form_submit_button_trace = st.form_submit_button(label = "Trace")
                 
                 # Selection du creneau de visualisation
                 # st.slider in Streamlit doesn’t natively support pandas.Timestamp objects.
                 # It only supports Python’s built-in datetime.datetime, date, time, int, or float.
-                # Sélection début et fin (dans la sidebar par ex.)
     
                 # Extraire l'heure et les minutes seulement
                 st.session_state.df["time"] = st.session_state.df["timestamp"].dt.time
@@ -223,13 +223,15 @@ with tab2:
                 
                 # Filtrer DataFrame sur une plage de temps
                 st.session_state.df_filtre = st.session_state.df[(st.session_state.df["time"] >= start_time) & (st.session_state.df["time"] <= end_time)]
-                
+                print(len(st.session_state.df_filtre))
+                print(len(st.session_state.df))
+
                 st.write(f"⏱ Range selected : {start_time} → {end_time}")
                 # st.dataframe(df_filtre)
     
-                st.session_state.form_submit_button_trace = st.form_submit_button(label = "Trace")
+                # st.session_state.form_submit_button_trace = st.form_submit_button(label = "Trace")
         
-            if not st.session_state.df.empty:
+            # if not st.session_state.df.empty:
                 
                 if st.session_state.form_submit_button_trace:
             
@@ -242,7 +244,10 @@ with tab2:
                         st.warning("No datas selected !")
                     
                     if st.session_state.df_filtre.empty:
-                       st.session_state.df_filtre = st.session_state.df 
+                       st.session_state.df_filtre = st.session_state.df
+                       print("il y a pas filtre")
+                    else:
+                        print("filtre actif")
                 
                     # Affichage des colonnes choisies
                     # Voltage per optimizer
@@ -421,6 +426,47 @@ with tab2:
                         # st.success(f"✅ Rapport des anomalies enregistré dans `{output_path}`")
     
                     st.success("Saved !")
+                    
+    if not st.session_state.df.empty:
+        if st.session_state.checkbox_Anomalies_datasheet_dftab_2:
+            st.markdown("Controls / datasheet (Input, Output)")
+            
+            with st.expander(f"{st.session_state.selected_model} datasheet"):
+                # st.write(st.session_state.input_AMPTdatasheet["Maximum voltage per input (V)"][st.session_state.indexModel])
+                # --- Disposition en deux colonnes ---
+                col1, col2 = st.columns(2)
+            
+                # INPUT
+                with col1:
+                    st.markdown("<h4 style='color:#ffa500; text-align:center;'>Input</h4>", unsafe_allow_html=True)
+                    for key, values in st.session_state.input_AMPTdatasheet.items():
+                        value = values[st.session_state.indexModel]
+                        st.markdown(
+                            f"""
+                            <p style='margin:2px 0;'>
+                                <b style='color:#00B4D8;'>{key}</b> :
+                                <span style='color:#FFFFFF;'>{value}</span>
+                            </p>
+                            """,
+                            unsafe_allow_html=True
+                        )
+                
+                # OUTPUT
+                with col2:
+                    st.markdown("<h4 style='color:#ffa500; text-align:center;'>Output</h4>", unsafe_allow_html=True)
+                    for key, values in st.session_state.output_AMPTdatasheet.items():
+                        value = values[st.session_state.indexModel]
+                        st.markdown(
+                            f"""
+                            <p style='margin:2px 0;'>
+                                <b style='color:#00B4D8;'>{key}</b> :
+                                <span style='color:#FFFFFF;'>{value}</span>
+                            </p>
+                            """,
+                            unsafe_allow_html=True
+                        )
+
+
       
 with tab3:
     st.markdown("""__Analyse 2__  
