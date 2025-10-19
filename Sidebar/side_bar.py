@@ -10,6 +10,10 @@ import re
 
 if "iconDate" not in st.session_state:
     st.session_state.iconDate = ""
+
+if "sidebarfile_Analyse" not in st.session_state:
+    st.session_state.sidebarfile_Analyse = ""
+
     
 # def common_part(file:str, state:bool):
 def common_part():
@@ -20,8 +24,12 @@ def common_part():
         st.sidebar.markdown("__AMPT-CU :__")
         if st.session_state.rawdata_AMPT_data_file_state == False:
             st.sidebar.info(f"{st.session_state.AMPT_file_loaded}")
+            if st.session_state.sidebarfile_Analyse !="" :
+                st.sidebar.write(f"👉 {st.session_state.sidebarfile_Analyse}")
         else:
             st.sidebar.error(f"{st.session_state.AMPT_file_loaded}")
+            st.sidebar.write("👉 Check rawdata")
+    # if st.session_state.numerical_parts_ampt_csv
 
         
     if not  st.session_state.df_carlo.empty:  

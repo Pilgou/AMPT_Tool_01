@@ -1,52 +1,52 @@
 {
-    "date_generation": "2025-10-06 07:18:38",
+    "date_generation": "2025-10-19 06:56:54",
     "anomalies": [
         {
             "colonne": "OutDCV_2",
             "AMPT": 2,
             "type": "valeurs quasi nulles",
-            "nb_quasi_zero": 6,
-            "premier_timestamp": "2025-09-30 22:10:22",
+            "nb_quasi_zero": 15,
+            "premier_timestamp": "2025-10-10 22:10:11",
             "valeur_min": 0.0
         },
         {
             "colonne": "In1DCV_2",
             "AMPT": 2,
             "type": "valeurs quasi nulles",
-            "nb_quasi_zero": 6,
-            "premier_timestamp": "2025-09-30 22:10:22",
+            "nb_quasi_zero": 15,
+            "premier_timestamp": "2025-10-10 22:10:11",
             "valeur_min": 0.0
         },
         {
             "colonne": "In2DCV_2",
             "AMPT": 2,
             "type": "valeurs quasi nulles",
-            "nb_quasi_zero": 6,
-            "premier_timestamp": "2025-09-30 22:10:22",
+            "nb_quasi_zero": 15,
+            "premier_timestamp": "2025-10-10 22:10:11",
             "valeur_min": 0.0
         },
         {
             "colonne": "OutDCV_5",
             "AMPT": 5,
             "type": "valeurs quasi nulles",
-            "nb_quasi_zero": 3,
-            "premier_timestamp": "2025-09-30 22:10:22",
+            "nb_quasi_zero": 30,
+            "premier_timestamp": "2025-10-10 22:10:11",
             "valeur_min": 0.0
         },
         {
             "colonne": "In1DCV_5",
             "AMPT": 5,
             "type": "valeurs quasi nulles",
-            "nb_quasi_zero": 3,
-            "premier_timestamp": "2025-09-30 22:10:22",
+            "nb_quasi_zero": 30,
+            "premier_timestamp": "2025-10-10 22:10:11",
             "valeur_min": 0.0
         },
         {
             "colonne": "In2DCV_5",
             "AMPT": 5,
             "type": "valeurs quasi nulles",
-            "nb_quasi_zero": 3,
-            "premier_timestamp": "2025-09-30 22:10:22",
+            "nb_quasi_zero": 30,
+            "premier_timestamp": "2025-10-10 22:10:11",
             "valeur_min": 0.0
         }
     ]

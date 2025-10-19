@@ -52,6 +52,11 @@ if "checkbox_All_AMPT_Power" not in st.session_state:
 if "checkbox_energyAMPT" not in st.session_state:
     st.session_state.checkbox_energyAMPT = False
 
+if "checkbox_Curves_dftab_3" not in st.session_state:
+    st.session_state.checkbox_Curves_dftab_3 = False
+    
+    
+
 if "form_submit_button_trace" not in st.session_state:
     st.session_state.form_submit_button_trace = False
     
@@ -134,7 +139,8 @@ with tab1:
     """)
 
 with tab2:
-    st.markdown(""" __Analyse 1__  
+    st.markdown(""" __Analyse 1__   
+                Oriented AMPT production, diagnostic from AMPT's Outputs mainly   
                 👉 Visualization of optimizer output : voltage, current, power  
                 👉 Visualization of energy distribution / optimizer  
                 👉 Statistics on Input/Output voltage""")
@@ -420,7 +426,9 @@ with tab2:
                     os.makedirs(output_dir, exist_ok=True)
     
                     # --- Sauvegarde du rapport JSON ---
-                    output_path = os.path.join(output_dir, f"errors_{st.session_state.AMPT_file_loaded}.json")
+                    nom_sans_extension = st.session_state.AMPT_file_loaded.removesuffix(".csv")
+
+                    output_path = os.path.join(output_dir, f"errors_{nom_sans_extension}.json")
                     with open(output_path, "w", encoding="utf-8") as f:
                         json.dump(errors_report, f, indent=4, ensure_ascii=False)                    
                         # st.success(f"✅ Rapport des anomalies enregistré dans `{output_path}`")
@@ -489,26 +497,31 @@ with tab3:
     
             columns_list = (list(st.session_state.df.columns))
             # print(columns_list)
-            inputs_voltage_columns_list = [col for col in columns_list if "In1DCV" in col]
+            inputs_1_voltage_columns_list = [col for col in columns_list if "In1DCV" in col]
             # print(output_voltage_columns_list)
-            inputs_current_columns_list = [col for col in columns_list if "In1DCA" in col]
+            inputs_1_current_columns_list = [col for col in columns_list if "In1DCA" in col]
             # output_power_columns_list = [col for col in columns_list if "In_Power" in col]
+            inputs_2_voltage_columns_list = [col for col in columns_list if "In2DCV" in col]
+            inputs_2_current_columns_list = [col for col in columns_list if "In2DCA" in col]
            
             col1, col2, col3, col4 = st.columns(4)
             with col1:
                 st.write("Select In1DCV..")               
                 # Sélection dynamique des courbes avec checkbox
-                st.session_state.in1DCV = [col for col in inputs_voltage_columns_list if st.checkbox(col, value=False)]
+                st.session_state.in1DCV = [col for col in inputs_1_voltage_columns_list if st.checkbox(col, value=False)]
             with col2:
                 st.write("Select In1DCA..")               
                 # Sélection dynamique des courbes avec checkbox
-                st.session_state.in1DCA = [col for col in inputs_current_columns_list if st.checkbox(col, value=False)]
-            # with col3:
-            #     st.write("Select InPower..")               
-            #     # Sélection dynamique des courbes avec checkbox
-            #     st.session_state.selection_p = [col for col in output_power_columns_list if st.checkbox(col, value=False)]
-            # with col4:
-            #     st.write("Others")
+                st.session_state.in1DCA = [col for col in inputs_1_current_columns_list if st.checkbox(col, value=False)]
+            with col3:
+                st.write("Select In2DCV..")               
+                # Sélection dynamique des courbes avec checkbox
+                st.session_state.in2DCV = [col for col in inputs_2_voltage_columns_list if st.checkbox(col, value=False)]
+            with col4:
+                st.write("Select In2DCA..")               
+                # Sélection dynamique des courbes avec checkbox
+                st.session_state.in2DCA = [col for col in inputs_2_current_columns_list if st.checkbox(col, value=False)]
+
             st.session_state.form_submit_button_traceInputs = st.form_submit_button(label = "Trace")
 
             if not st.session_state.df.empty:
@@ -517,7 +530,9 @@ with tab3:
             
                     fusion_v_in1 = ["timestamp"] + st.session_state.in1DCV
                     fusion_a_in1 = ["timestamp"] + st.session_state.in1DCA
-                    # fusion_p = ["timestamp"] + st.session_state.selection_p
+
+                    fusion_v_in2 = ["timestamp"] + st.session_state.in2DCV
+                    fusion_a_in2 = ["timestamp"] + st.session_state.in2DCA
                     
                     if st.session_state.in1DCA == st.session_state.in1DCV:
                         st.warning("No datas selected !")
@@ -526,21 +541,27 @@ with tab3:
                        st.session_state.df_filtre = st.session_state.df 
                        
                     # Affichage des colonnes choisies
-                    # Voltage per optimizer
+                    # Voltage per optimizer Input 1
                     if st.session_state.in1DCV !=[]:
                         # st.write("✅ Colonnes sélectionnées")
                         # st.write(fusion)
                         st.write("📈 In1DCV Voltage")
                         st.line_chart(st.session_state.df_filtre[fusion_v_in1], x="timestamp")
-                    # Amps per optimizer 
+                    # Amps per optimizer Input 2
                     if st.session_state.in1DCA !=[]:
                         st.write("📊 In1DCA Current")
                         st.line_chart(st.session_state.df_filtre[fusion_a_in1], x="timestamp")
-                    # Power per optimizer
-                    if st.session_state.selection_p !=[]:
-                        st.write("📊 In1_Power")
-                        st.line_chart(st.session_state.df_filtre[fusion_p], x="timestamp")
 
+                    # Voltage per optimizer Input 2
+                    if st.session_state.in2DCV !=[]:
+                        # st.write("✅ Colonnes sélectionnées")
+                        # st.write(fusion)
+                        st.write("📈 In2DCV Voltage")
+                        st.line_chart(st.session_state.df_filtre[fusion_v_in2], x="timestamp")
+                    # Amps per optimizer Input 2
+                    if st.session_state.in2DCA !=[]:
+                        st.write("📊 In2DCA Current")
+                        st.line_chart(st.session_state.df_filtre[fusion_a_in2], x="timestamp")
 
     
     

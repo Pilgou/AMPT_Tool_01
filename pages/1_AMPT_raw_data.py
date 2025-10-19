@@ -58,8 +58,8 @@ def btn_displayDataframe():
 def btn_displayLine_chart() :
     st.line_chart(st.session_state.df_OutDCV_plot)
 
-# Clear shell
-os.system("cls")
+# # Clear shell
+# os.system("cls")
 
 st.title ("Raw Data from AMPT Optimizer")
 st.markdown(" On this page : select raw data _(.csv file)_")
@@ -84,6 +84,9 @@ csv_path = current_path + "/CSV"
 csv_file_list_Path, csv_file_list_name = fm.search_files_by_extension(csv_path, ".csv") 
 # Enlever les fichiers contenant "Carlo"
 csv_file_list_name = [f for f in csv_file_list_name if "Carlo" not in f]
+# Extraction des parties numériques
+st.session_state.numerical_parts_ampt_csv = [re.findall(r'\d+', f)[0] for f in csv_file_list_name if re.findall(r'\d+', f)]
+# print(st.session_state.numerical_parts_ampt_csv)
 
 # Looking for .db files
 db_file_list_Path, db_file_list_name = fm.search_files_by_extension(current_path, ".db") 
@@ -203,6 +206,10 @@ if not st.session_state.df_OutDCV_plot.empty:
         else:
             st.success("✅ Aucune valeur manquante détectée.")
             st.session_state.rawdata_AMPT_data_file_state = False
+        
+        if st.session_state.ampt_duration.seconds//60 < 1400:
+            st.warning("⚠️ Record time ⏱ is not complete (24H).")
+            st.session_state.rawdata_AMPT_data_file_state = True
 
 
             

@@ -31,6 +31,39 @@
           { "brand": "Ampernext", "power_kw": 30 }
         ]
       }
+    },
+{
+      "name": "Solaris2",
+      "description": {
+        "address": "Grenoble EQI2",
+        "gps_coordinates": null,
+        "installation_type": ["Parking2", "PV carport", "ESEV", "Container BESS"]
+      },
+      "specifications": {
+        "network_type": 700,
+        "PV": {
+          "power_kwp": 65,
+	  "PV model":"",
+	  "Nb_PV":"136",
+          "optimizer_model": "V900"
+        },
+        "BESS": {
+	  "Model":"Pylontech",
+          "Nb batteries": "9 colonnes",
+          "Power kw Total": null,
+          "Capacity kwh Total": null,
+          "Voltage v": 700
+        },
+        "ESEV": [
+          { "brand": "StarCharge", "power_kw": 11 },
+          { "brand": "StarCharge", "power_kw": 11 },
+          { "brand": "StarCharge", "power_kw": 11 },
+          { "brand": "StarCharge", "power_kw": 11 },
+          { "brand": "Ampernext", "power_kw": 30 },
+          { "brand": "Ampernext", "power_kw": 30 }
+        ]
+      }
     }
-  ]
+  
+]
 }

@@ -9,6 +9,19 @@ Streamlit FrontEnd Home page
 import streamlit as st
 import os
 import json
+import pandas as pd
+from Anomalies_Reports import Anomalies_Reports as ar
+from Sidebar import side_bar as sb
+
+
+# Clear shell
+os.system("cls")
+
+if "df" not in st.session_state:
+    st.session_state.df = pd.DataFrame()
+    
+if "df_carlo" not in st.session_state:
+    st.session_state.df_carlo = pd.DataFrame()
 
 if "input_AMPTdatasheet" not in st.session_state:
     st.session_state.input_AMPTdatasheet = {}
@@ -22,7 +35,12 @@ if "indexModel" not in st.session_state:
     with open(".\Details_Projects_Devices\AMPT_Datasheet.json", "r") as f:
         st.session_state.datasheet = json.load(f)
 
+if "AMPT_file_loaded" not in st.session_state:
+    st.session_state.AMPT_file_loaded = ""
 
+if "EM_file_loaded" not in st.session_state:
+    st.session_state.EM_file_loaded = ""
+    
 if "selected_project" not in st.session_state:
     st.session_state.selected_project = "Solaris"
 
@@ -74,7 +92,7 @@ col1, col2 = st.columns(2)
 #     # st.image(os.path.join(current_path,"images","AMPT.jpg"),width=250)#,width=200)
 #     st.image(".\images\AMPT.jpg",width=250)
 
-tab1, tab2, tab3, tab4 = st.tabs(["Settings", "Projects", "Optimizers", "About"])
+tab1, tab2, tab3, tab4, tab5 = st.tabs(["Settings", "Projects", "Optimizers", "Anomalies", "About"])
 
 with tab1:
 
@@ -140,11 +158,14 @@ with tab2:
     
     # --- Sélecteur de projet ---
     project_names = [p["name"] for p in st.session_state.project_data["projects"]]
-    st.session_state.selected_project = st.selectbox("📁 Select a projet :", project_names)
+    nouveau_choix = st.selectbox("📁 Select a projet :", project_names)
+    if nouveau_choix != st.session_state.selected_project:
+        st.session_state.selected_project = nouveau_choix
+        st.rerun()  # Force le rafraîchissement pour mettre à jour l'affichage amont
     
     # --- Trouver le projet sélectionné ---
     st.session_state.project = next((p for p in st.session_state.project_data["projects"] if p["name"] == st.session_state.selected_project), None)
-    
+   
     if st.session_state.project:
         st.title(f"🔆 Projet : {st.session_state.project['name']}")
     
@@ -209,13 +230,13 @@ with tab3:
 
     # --- Trouver l'index du modèle sélectionné ---
     st.session_state.indexModel = models.index(st.session_state.selected_model)
-    print(st.session_state.indexModel)
+    # print(st.session_state.indexModel)
 
     # --- Récupérer les données ---
     st.session_state.input_AMPTdatasheet = st.session_state.datasheet["Electrical"]["Input"]
     st.session_state.output_AMPTdatasheet = st.session_state.datasheet["Electrical"]["Output"]
-    print(st.session_state.datasheet["Electrical"]["Input"]["Maximum voltage per input (V)"][st.session_state.indexModel])
-    print(st.session_state.input_AMPTdatasheet["Maximum voltage per input (V)"][st.session_state.indexModel])
+    # print(st.session_state.datasheet["Electrical"]["Input"]["Maximum voltage per input (V)"][st.session_state.indexModel])
+    # print(st.session_state.input_AMPTdatasheet["Maximum voltage per input (V)"][st.session_state.indexModel])
 
     # --- Affichage stylé ---
     st.markdown(
@@ -267,8 +288,12 @@ with tab3:
     st.image(os.path.join(current_path,"images","AMPT.jpg"),width=250)#,width=200)
     st.markdown("[AMPT web site](https://www.ampt.com/products/string-optimizers)")
 
-
 with tab4:
+    st.write("Anomalies recorded")
+    
+    ar.AnomaliesList()
+
+with tab5:
     with st.expander("Python scrips description"):
         st.markdown(
             """
@@ -284,3 +309,5 @@ with tab4:
             ###   
             
         """)
+sb.common_part()
+
