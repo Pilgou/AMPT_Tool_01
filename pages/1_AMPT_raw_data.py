@@ -30,8 +30,8 @@ if "df_OutDCV_plot" not in st.session_state:
 if "form_submit_button" not in st.session_state:
     st.session_state.form_submit_button = False
     
-if "checkbox_df" not in st.session_state:
-    st.session_state.checkbox_df = False
+if "DispRawChecked" not in st.session_state:
+    st.session_state.DispRawChecked = False
 
 if "AMPT_file_loaded" not in st.session_state:
     st.session_state.AMPT_file_loaded = ""
@@ -39,8 +39,8 @@ if "AMPT_file_loaded" not in st.session_state:
 if "EM_file_loaded" not in st.session_state:
     st.session_state.EM_file_loaded = ""
 
-if "checkbox_Curves_df" not in st.session_state:
-    st.session_state.checkbox_Curves_df = False
+if "DispCurvChecked" not in st.session_state:
+    st.session_state.DispCurvChecked = False
     
 if "data_file_to_load_carlo" not in st.session_state:
     st.session_state.data_file_to_load_carlo = ""
@@ -50,6 +50,12 @@ if "rawdata_AMPT_data_file_state" not in st.session_state:
     
 if "rawdata_EM_data_file_state" not in st.session_state:    
     st.session_state.rawdata_EM_data_file_state = False
+
+if "iconDate" not in st.session_state:
+    st.session_state.iconDate = ""
+
+if "sidebarfile_Analyse" not in st.session_state:
+    st.session_state.sidebarfile_Analyse = ""
 
 
 def btn_displayDataframe():
@@ -108,6 +114,9 @@ with st.form(key = "source_selector"):
     st.session_state.form_submit_button = st.form_submit_button(label = "Load")
     
 if st.session_state.form_submit_button:
+    st.session_state.DispRawChecked = False
+    st.session_state.DispCurvChecked = False
+
     if ".csv" in data_file_to_load:
         # load csv file and convert it to dataframe
         st.session_state.df = pd.read_csv(f'./CSV/{data_file_to_load}')
@@ -182,8 +191,25 @@ if not st.session_state.df_OutDCV_plot.empty:
         # duration = endDate - startDate
         # or
         st.session_state.ampt_duration = st.session_state.df['timestamp'].max() - st.session_state.df['timestamp'].min()
-        st.session_state.ampt_sampling = ampt_secondDate - st.session_state.ampt_startDate
+        # st.session_state.ampt_sampling = ampt_secondDate - st.session_state.ampt_startDate
+        # Calcul du sampling
+        # Calculer la différence entre deux timestamps successifs
+        st.session_state.df["delta"] = st.session_state.df["timestamp"].diff()
+        
+        #Temps moyen entre deux mesures
+        mean_delta = st.session_state.df["delta"].mean()
+        # print(f"Temps moyen entre deux échantillons : {mean_delta.seconds} ms")
+        st.session_state.ampt_sampling = mean_delta
 
+        # Détection d’anomalies temporelle(sur le sampling) : rupture de com (ex : si > 2× le temps moyen)
+        threshold_sampling = 2 * mean_delta
+        st.session_state.df["anomaly"] = st.session_state.df["delta"] > threshold_sampling
+        # Compter le nombre total d’anomalies
+        nb_anomalies_sampling = st.session_state.df["anomaly"].sum()
+        
+        
+        # print(f"Nombre d’anomalies détectées : {nb_anomalies_sampling}")
+        
         col3, col4 = st.columns(2)
         with col3:
             st.write("Start")
@@ -200,7 +226,12 @@ if not st.session_state.df_OutDCV_plot.empty:
             st.write(f"{st.session_state.ampt_duration.seconds//60} mn -> {st.session_state.deltatimeHM}")
             st.write(st.session_state.max_nb_AMPT)
             
-        if st.session_state.df.isnull().values.any():
+        # Vérifie les valeurs manquantes sauf dans la colonne "delta"
+        # Liste des colonnes à exclure
+        excluded_cols = ["delta", "anomaly"]
+        # excluded_cols = ["delta"]
+        cols_to_check = [c for c in st.session_state.df.columns if c not in excluded_cols]    
+        if st.session_state.df[cols_to_check].isnull().values.any():
             st.error("❌ Le DataFrame contient des valeurs manquantes (None ou NaN).")
             st.session_state.rawdata_AMPT_data_file_state = True
         else:
@@ -210,6 +241,14 @@ if not st.session_state.df_OutDCV_plot.empty:
         if st.session_state.ampt_duration.seconds//60 < 1400:
             st.warning("⚠️ Record time ⏱ is not complete (24H).")
             st.session_state.rawdata_AMPT_data_file_state = True
+            
+        if nb_anomalies_sampling and not st.session_state.df[cols_to_check].isnull().values.any():
+            st.warning(f"⚠️ Dataframe with {nb_anomalies_sampling} sampling anomalies")
+            st.session_state.rawdata_AMPT_data_file_state = True
+            anomalies = st.session_state.df[st.session_state.df["anomaly"]]
+            st.write(anomalies[["timestamp", "delta"]])
+
+            
 
 
             
@@ -234,8 +273,8 @@ if not st.session_state.df_OutDCV_plot.empty:
         # max → valeur maximale
 
 
-    st.session_state.checkbox_df = st.checkbox("Display RawData",value=st.session_state.get(""),help="Display DataFrame")
-    st.session_state.checkbox_Curves_df = st.checkbox("Display Voltage Outputs Curves",value=st.session_state.get(""),help="OutDCV_x")
+    st.session_state.checkbox_df = st.checkbox("Display RawData",value=st.session_state.get(""),key="DispRawChecked",help="Display DataFrame")
+    st.session_state.checkbox_Curves_df = st.checkbox("Display Voltage Outputs Curves",value=st.session_state.get(""),key="DispCurvChecked",help="OutDCV_x")
 
 if not st.session_state.df.empty:
 
@@ -253,14 +292,14 @@ if not st.session_state.df.empty:
                  'DCWh_5', 'OutDCA_5', 'In1DCA_5', 'In2DCA_5', "Out_Power_5", 'OutDCV_6',
                  'In1DCV_6', 'In2DCV_6', 'DCWh_6', 'OutDCA_6', 'In1DCA_6', 'In2DCA_6',
                  "Out_Power_6","Out_Total_Power","Out_Energy_1", "Out_Energy_2", "Out_Energy_3",
-                 "Out_Energy_4" ,"Out_Energy_5", "Out_Energy_6", 'DayOfWeek']
+                 "Out_Energy_4" ,"Out_Energy_5", "Out_Energy_6", 'DayOfWeek',"delta","anomaly"]
     df2 = st.session_state.df[new_order]
     # Affichage dataframe
-    if st.session_state.checkbox_df:
+    if st.session_state.DispRawChecked:
         # st.dataframe(st.session_state.df)
         st.dataframe(df2)
         # print(df2.iloc[0:5])
-    if st.session_state.checkbox_Curves_df:
+    if st.session_state.DispCurvChecked:
         st.line_chart(st.session_state.df_OutDCV_plot)
 
 # Display common part of Sidebar

@@ -1,0 +1,64 @@
+{
+  "PV_Module_430W": {
+    "1000W/m2": [
+      {"Voltage(V)": 0, "Current(A)": 10.6},
+      {"Voltage(V)": 5, "Current(A)": 10.6},
+      {"Voltage(V)": 10, "Current(A)": 10.5},
+      {"Voltage(V)": 20, "Current(A)": 10.4},
+      {"Voltage(V)": 30, "Current(A)": 10.3},
+      {"Voltage(V)": 40, "Current(A)": 10.2},
+      {"Voltage(V)": 45, "Current(A)": 9.8},
+      {"Voltage(V)": 48, "Current(A)": 8.0},
+      {"Voltage(V)": 50, "Current(A)": 3.0},
+      {"Voltage(V)": 52, "Current(A)": 0.0}
+    ],
+    "800W/m2": [
+      {"Voltage(V)": 0, "Current(A)": 8.5},
+      {"Voltage(V)": 5, "Current(A)": 8.5},
+      {"Voltage(V)": 10, "Current(A)": 8.4},
+      {"Voltage(V)": 20, "Current(A)": 8.3},
+      {"Voltage(V)": 30, "Current(A)": 8.2},
+      {"Voltage(V)": 40, "Current(A)": 8.1},
+      {"Voltage(V)": 45, "Current(A)": 7.8},
+      {"Voltage(V)": 48, "Current(A)": 6.5},
+      {"Voltage(V)": 50, "Current(A)": 2.5},
+      {"Voltage(V)": 52, "Current(A)": 0.0}
+    ],
+    "600W/m2": [
+      {"Voltage(V)": 0, "Current(A)": 6.4},
+      {"Voltage(V)": 5, "Current(A)": 6.4},
+      {"Voltage(V)": 10, "Current(A)": 6.3},
+      {"Voltage(V)": 20, "Current(A)": 6.2},
+      {"Voltage(V)": 30, "Current(A)": 6.1},
+      {"Voltage(V)": 40, "Current(A)": 6.0},
+      {"Voltage(V)": 45, "Current(A)": 5.6},
+      {"Voltage(V)": 48, "Current(A)": 4.2},
+      {"Voltage(V)": 50, "Current(A)": 1.5},
+      {"Voltage(V)": 52, "Current(A)": 0.0}
+    ],
+    "400W/m2": [
+      {"Voltage(V)": 0, "Current(A)": 4.2},
+      {"Voltage(V)": 5, "Current(A)": 4.2},
+      {"Voltage(V)": 10, "Current(A)": 4.1},
+      {"Voltage(V)": 20, "Current(A)": 4.0},
+      {"Voltage(V)": 30, "Current(A)": 3.9},
+      {"Voltage(V)": 40, "Current(A)": 3.8},
+      {"Voltage(V)": 45, "Current(A)": 3.4},
+      {"Voltage(V)": 48, "Current(A)": 2.0},
+      {"Voltage(V)": 50, "Current(A)": 0.5},
+      {"Voltage(V)": 52, "Current(A)": 0.0}
+    ],
+    "200W/m2": [
+      {"Voltage(V)": 0, "Current(A)": 2.1},
+      {"Voltage(V)": 5, "Current(A)": 2.1},
+      {"Voltage(V)": 10, "Current(A)": 2.0},
+      {"Voltage(V)": 20, "Current(A)": 1.9},
+      {"Voltage(V)": 30, "Current(A)": 1.8},
+      {"Voltage(V)": 40, "Current(A)": 1.6},
+      {"Voltage(V)": 45, "Current(A)": 1.2},
+      {"Voltage(V)": 48, "Current(A)": 0.6},
+      {"Voltage(V)": 50, "Current(A)": 0.1},
+      {"Voltage(V)": 52, "Current(A)": 0.0}
+    ]
+  }
+}

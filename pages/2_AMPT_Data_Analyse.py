@@ -137,15 +137,90 @@ with tab1:
             
         
     """)
+def displayExpanderAMPT_Datasheet():
+    with st.expander(f"{st.session_state.selected_model} datasheet"):
+        # st.write(st.session_state.input_AMPTdatasheet["Maximum voltage per input (V)"][st.session_state.indexModel])
+        # --- Disposition en deux colonnes ---
+        col1, col2 = st.columns(2)
+    
+        # INPUT
+        with col1:
+            st.markdown("<h4 style='color:#ffa500; text-align:center;'>Input</h4>", unsafe_allow_html=True)
+            for key, values in st.session_state.input_AMPTdatasheet.items():
+                value = values[st.session_state.AMPT_indexModel]
+                st.markdown(
+                    f"""
+                    <p style='margin:2px 0;'>
+                        <b style='color:#00B4D8;'>{key}</b> :
+                        <span style='color:#FFFFFF;'>{value}</span>
+                    </p>
+                    """,
+                    unsafe_allow_html=True
+                )
+        
+        # OUTPUT
+        with col2:
+            st.markdown("<h4 style='color:#ffa500; text-align:center;'>Output</h4>", unsafe_allow_html=True)
+            for key, values in st.session_state.output_AMPTdatasheet.items():
+                value = values[st.session_state.AMPT_indexModel]
+                st.markdown(
+                    f"""
+                    <p style='margin:2px 0;'>
+                        <b style='color:#00B4D8;'>{key}</b> :
+                        <span style='color:#FFFFFF;'>{value}</span>
+                    </p>
+                    """,
+                    unsafe_allow_html=True
+                )
+        st.markdown("[Datasheet](https://www.ampt.com/wp-content/uploads/2023/08/Ampt_i13.5_1000Vsys__Datasheet_EN_51770007-1P.pdf)")
+
+def displayExpanderPV_Datasheet():
+    with st.expander(f"{st.session_state.selected_model_PV} datasheet"):
+        # st.write(st.session_state.input_AMPTdatasheet["Maximum voltage per input (V)"][st.session_state.indexModel])
+        # --- Disposition en deux colonnes ---
+
+        # st.markdown("[Datasheet](./PDF/datasheet_trina_solar_tsm-neg9rc-27.pdf)")
+        # st.markdown("[📖 Ouvrir le PDF](datasheet_trina_solar_tsm-neg9rc-27.pdf)", unsafe_allow_html=True)
+        # --- Disposition en deux colonnes ---
+        col1, col2 = st.columns(2)
+        # STC
+        with col1:
+            st.markdown("<h4 style='color:#ffa500; text-align:center;'>STC</h4>", unsafe_allow_html=True)
+            for key, values in st.session_state.STC_PVdatasheet.items():
+                value = values[st.session_state.PV_indexModel]
+                st.markdown(
+                    f"""
+                    <p style='margin:2px 0;'>
+                        <b style='color:#00B4D8;'>{key}</b> :
+                        <span style='color:#FFFFFF;'>{value}</span>
+                    </p>
+                    """,
+                    unsafe_allow_html=True
+                )
+        # NOCT
+        with col2:
+            st.markdown("<h4 style='color:#ffa500; text-align:center;'>NOCT</h4>", unsafe_allow_html=True)
+            for key, values in st.session_state.NOCT_PVdatasheet.items():
+                value = values[st.session_state.PV_indexModel]
+                st.markdown(
+                    f"""
+                    <p style='margin:2px 0;'>
+                        <b style='color:#00B4D8;'>{key}</b> :
+                        <span style='color:#FFFFFF;'>{value}</span>
+                    </p>
+                    """,
+                    unsafe_allow_html=True
+                )
+
 
 with tab2:
     st.markdown(""" __Analyse 1__   
                 Oriented AMPT production, diagnostic from AMPT's Outputs mainly   
                 👉 Visualization of optimizer output : voltage, current, power  
                 👉 Visualization of energy distribution / optimizer  
-                👉 Statistics on Input/Output voltage""")
+                👉 Statistics on Input/Output voltage   
+                👉 Check outputs values / Datasheet""")
     st.divider()
-    # st.image("https://static.streamlit.io/examples/dog.jpg", width=200)
     
     if not st.session_state.df.empty:
         st.session_state.checkbox_Curves_dftab_2 = st.checkbox("Outputs Curves",
@@ -157,7 +232,7 @@ with tab2:
         st.session_state.checkbox_Anomalies_dftab_2 = st.checkbox("Search for anomalies on voltages from basic statistics",
                                                                value=st.session_state.get(""),
                                                                help="")
-        st.session_state.checkbox_Anomalies_datasheet_dftab_2 = st.checkbox("Search for anomalies / AMPT datasheet",
+        st.session_state.checkbox_Anomalies_datasheet_dftab_2 = st.checkbox("Search for AMPT's ouputs anomalies / datasheet",
                                                                value=st.session_state.get(""),
                                                                help="")
 
@@ -437,57 +512,107 @@ with tab2:
                     
     if not st.session_state.df.empty:
         if st.session_state.checkbox_Anomalies_datasheet_dftab_2:
-            st.markdown("Controls / datasheet (Input, Output)")
+            st.markdown("Controls / datasheet (Output)")
+            displayExpanderAMPT_Datasheet()
+            # with st.expander(f"{st.session_state.selected_model} datasheet"):
+            #     # st.write(st.session_state.input_AMPTdatasheet["Maximum voltage per input (V)"][st.session_state.indexModel])
+            #     # --- Disposition en deux colonnes ---
+            #     col1, col2 = st.columns(2)
             
-            with st.expander(f"{st.session_state.selected_model} datasheet"):
-                # st.write(st.session_state.input_AMPTdatasheet["Maximum voltage per input (V)"][st.session_state.indexModel])
-                # --- Disposition en deux colonnes ---
-                col1, col2 = st.columns(2)
-            
-                # INPUT
-                with col1:
-                    st.markdown("<h4 style='color:#ffa500; text-align:center;'>Input</h4>", unsafe_allow_html=True)
-                    for key, values in st.session_state.input_AMPTdatasheet.items():
-                        value = values[st.session_state.indexModel]
-                        st.markdown(
-                            f"""
-                            <p style='margin:2px 0;'>
-                                <b style='color:#00B4D8;'>{key}</b> :
-                                <span style='color:#FFFFFF;'>{value}</span>
-                            </p>
-                            """,
-                            unsafe_allow_html=True
-                        )
+            #     # INPUT
+            #     with col1:
+            #         st.markdown("<h4 style='color:#ffa500; text-align:center;'>Input</h4>", unsafe_allow_html=True)
+            #         for key, values in st.session_state.input_AMPTdatasheet.items():
+            #             value = values[st.session_state.AMPT_indexModel]
+            #             st.markdown(
+            #                 f"""
+            #                 <p style='margin:2px 0;'>
+            #                     <b style='color:#00B4D8;'>{key}</b> :
+            #                     <span style='color:#FFFFFF;'>{value}</span>
+            #                 </p>
+            #                 """,
+            #                 unsafe_allow_html=True
+            #             )
                 
-                # OUTPUT
-                with col2:
-                    st.markdown("<h4 style='color:#ffa500; text-align:center;'>Output</h4>", unsafe_allow_html=True)
-                    for key, values in st.session_state.output_AMPTdatasheet.items():
-                        value = values[st.session_state.indexModel]
-                        st.markdown(
-                            f"""
-                            <p style='margin:2px 0;'>
-                                <b style='color:#00B4D8;'>{key}</b> :
-                                <span style='color:#FFFFFF;'>{value}</span>
-                            </p>
-                            """,
-                            unsafe_allow_html=True
-                        )
+            #     # OUTPUT
+            #     with col2:
+            #         st.markdown("<h4 style='color:#ffa500; text-align:center;'>Output</h4>", unsafe_allow_html=True)
+            #         for key, values in st.session_state.output_AMPTdatasheet.items():
+            #             value = values[st.session_state.AMPT_indexModel]
+            #             st.markdown(
+            #                 f"""
+            #                 <p style='margin:2px 0;'>
+            #                     <b style='color:#00B4D8;'>{key}</b> :
+            #                     <span style='color:#FFFFFF;'>{value}</span>
+            #                 </p>
+            #                 """,
+            #                 unsafe_allow_html=True
+            #             )
+
+            st.write("Test des Valeurs limites")
+            col13, col14 = st.columns(2)
+            
+
+            with col13:
+
+                st.write(f"Max Voltage / output : {st.session_state.output_AMPTdatasheet["Output voltage at zero power (V)"][st.session_state.AMPT_indexModel]} V")
+                test_Out_Voltage_max = ['OutDCV_1', 'OutDCV_2', 'OutDCV_3', 'OutDCV_4',  
+                                      'OutDCV_5', 'OutDCV_6']
+                
+                for col in test_Out_Voltage_max:
+                    desc = st.session_state.df[col].describe()
+                    max_Out_Volt_val = desc["max"]
+                    
+                    # Seuil
+                    seuil_out_max_voltage = st.session_state.output_AMPTdatasheet["Output voltage at zero power (V)"][st.session_state.AMPT_indexModel]
+
+                    # Si la valeur est <= seuil
+                    if max_Out_Volt_val <= seuil_out_max_voltage:
+                        symbole = "✅"
+                    else:
+                        symbole = "❌"
+                
+                    st.write(f"{col} : {int(max_Out_Volt_val)} {symbole}")
+
+            with col14:
+
+                st.write(f"Max Current / output : {st.session_state.output_AMPTdatasheet["Maximum output current (A)"][st.session_state.AMPT_indexModel]} V")
+                test_Out_Current_max = ['OutDCA_1', 'OutDCA_2', 'OutDCA_3', 'OutDCA_4',  
+                                      'OutDCA_5', 'OutDCA_6']
+                
+                for col in test_Out_Current_max:
+                    desc = st.session_state.df[col].describe()
+                    max_Out_Current_val = desc["max"]
+                    
+                    # Seuil
+                    seuil_out_max_current = st.session_state.output_AMPTdatasheet["Maximum output current (A)"][st.session_state.AMPT_indexModel]
+
+                    # Si la valeur est <= seuil
+                    if max_Out_Current_val <= seuil_out_max_current:
+                        symbole = "✅"
+                    else:
+                        symbole = "❌"
+                
+                    st.write(f"{col} : {int(max_Out_Current_val)} {symbole}")
 
 
-      
+    
 with tab3:
     st.markdown("""__Analyse 2__  
                 Oriented PV (strings) diagnostic from AMPT's Inputs   
-                👉 Visualization of optimizer inputs  
-                👉 Analyses on Inputs""")
+                👉 Visualization of optimizer inputs by chanel  
+                👉 Visualization of inputs by optimizer                
+                👉 Check AMPT's Inputs values / PV datasheet ( PV strings )""")
     st.divider()
     
     if not st.session_state.df.empty:
-        st.session_state.checkbox_Curves_dftab_3 = st.checkbox("Inputs Curves",
+        st.session_state.checkbox_Curves_dftab_3 = st.checkbox("Inputs Curves by chanel",
                                                                value=st.session_state.get(""),
                                                                help="InDCV, InDCA, Power")
-        st.session_state.checkbox_Anomalies_dftab_3 = st.checkbox("Search for anomalies on strings",
+        st.session_state.checkbox_Curves_df_opt_tab_3 = st.checkbox("Inputs Curves by AMPT",
+                                                               value=st.session_state.get(""),
+                                                               help="InDCV, InDCA, Power")
+        st.session_state.checkbox_Anomalies_dftab_3 = st.checkbox("Search for anomalies on inputs strings",
                                                                value=st.session_state.get(""),
                                                                help="")
     st.divider()
@@ -563,6 +688,129 @@ with tab3:
                         st.write("📊 In2DCA Current")
                         st.line_chart(st.session_state.df_filtre[fusion_a_in2], x="timestamp")
 
+    if st.session_state.checkbox_Curves_df_opt_tab_3:
+        with st.form(key = "Inputs_Analyse_AMPT"):
+            columns_list = (list(st.session_state.df.columns))
+            # print(columns_list)
+            ampt1_list = [col for col in columns_list if "_1" in col]
+            ampt2_list = [col for col in columns_list if "_2" in col]
+            ampt3_list = [col for col in columns_list if "_3" in col]
+            ampt4_list = [col for col in columns_list if "_4" in col]
+            ampt5_list = [col for col in columns_list if "_5" in col]
+            ampt6_list = [col for col in columns_list if "_6" in col]
+
     
-    
-    
+            col5, col6, col7, col8, col9, col10 = st.columns(6)
+            with col5:
+                st.write("AMPT 1")               
+                # Sélection dynamique des courbes avec checkbox
+                st.session_state.ampt1 = [col for col in ampt1_list if st.checkbox(col, value=False)]
+            with col6:
+                st.write("AMPT 2")               
+                # Sélection dynamique des courbes avec checkbox
+                st.session_state.ampt2 = [col for col in ampt2_list if st.checkbox(col, value=False)]
+            with col7:
+                st.write("AMPT 3")               
+                # Sélection dynamique des courbes avec checkbox
+                st.session_state.ampt3 = [col for col in ampt3_list if st.checkbox(col, value=False)]
+            with col8:
+                st.write("AMPT 4")               
+                # Sélection dynamique des courbes avec checkbox
+                st.session_state.ampt4 = [col for col in ampt4_list if st.checkbox(col, value=False)]
+            with col9:
+                st.write("AMPT 5")               
+                # Sélection dynamique des courbes avec checkbox
+                st.session_state.ampt5 = [col for col in ampt5_list if st.checkbox(col, value=False)]
+            with col10:
+                st.write("AMPT 6")               
+                # Sélection dynamique des courbes avec checkbox
+                st.session_state.ampt6 = [col for col in ampt6_list if st.checkbox(col, value=False)]
+            
+            st.session_state.form_submit_button_traceInputs_ampt = st.form_submit_button(label = "Trace")
+            if not st.session_state.df.empty:
+                
+                if st.session_state.form_submit_button_traceInputs_ampt:
+            
+                    fusion_ampt_1 = ["timestamp"] + st.session_state.ampt1
+                    fusion_ampt_2 = ["timestamp"] + st.session_state.ampt2
+                    fusion_ampt_3 = ["timestamp"] + st.session_state.ampt3
+                    fusion_ampt_4 = ["timestamp"] + st.session_state.ampt4
+                    fusion_ampt_5 = ["timestamp"] + st.session_state.ampt5
+                    fusion_ampt_6 = ["timestamp"] + st.session_state.ampt6
+                    
+                    if st.session_state.ampt1 == st.session_state.ampt2==[]:
+                        st.warning("No datas selected !")
+                    
+                    if st.session_state.df_filtre.empty:
+                       st.session_state.df_filtre = st.session_state.df 
+                       
+                    # Affichage des colonnes choisies
+                    # Voltage per optimizer
+                    if st.session_state.ampt1 !=[]:
+                        st.write("📈 AMPT 1")
+                        st.line_chart(st.session_state.df_filtre[fusion_ampt_1], x="timestamp")
+                    if st.session_state.ampt2 !=[]:
+                        st.write("📈 AMPT 2")
+                        st.line_chart(st.session_state.df_filtre[fusion_ampt_2], x="timestamp")
+                    if st.session_state.ampt3 !=[]:
+                        st.write("📈 AMPT 3")
+                        st.line_chart(st.session_state.df_filtre[fusion_ampt_3], x="timestamp")
+                    if st.session_state.ampt4 !=[]:
+                        st.write("📈 AMPT 4")
+                        st.line_chart(st.session_state.df_filtre[fusion_ampt_4], x="timestamp")
+                    if st.session_state.ampt5 !=[]:
+                        st.write("📈 AMPT 5")
+                        st.line_chart(st.session_state.df_filtre[fusion_ampt_5], x="timestamp")
+                    if st.session_state.ampt6 !=[]:
+                        st.write("📈 AMPT 6")
+                        st.line_chart(st.session_state.df_filtre[fusion_ampt_6], x="timestamp")
+
+    if st.session_state.checkbox_Anomalies_dftab_3:
+        displayExpanderAMPT_Datasheet()
+        displayExpanderPV_Datasheet()
+        st.write("Test des Valeurs limites")
+        col15, col16, = st.columns(2)
+        
+        with col15:
+
+            st.write(f"Max voltage / input : {st.session_state.input_AMPTdatasheet["Maximum voltage per input (V)"][st.session_state.AMPT_indexModel]} V")
+            test_In_Voltage_max = ['In1DCV_1', 'In2DCV_1', 'In1DCV_2','In2DCV_2',  
+                                  'In1DCV_3', 'In2DCV_3','In1DCV_4', 'In2DCV_4',  
+                                  'In1DCV_5', 'In2DCV_5','In1DCV_6', 'In2DCV_6']
+
+            for col in test_In_Voltage_max:
+                desc = st.session_state.df[col].describe()
+                max_val = desc["max"]
+            
+                # Seuil
+                seuil_in_max_volt = st.session_state.input_AMPTdatasheet["Maximum voltage per input (V)"][st.session_state.AMPT_indexModel]
+            
+                # Si la valeur est <= seuil
+                if max_val <= seuil_in_max_volt:
+                    symbole = "✅"
+                else:
+                    symbole = "❌"
+            
+                st.write(f"{col} : {int(max_val)} {symbole}")
+
+        with col16:
+
+            st.write(f"Max current / input : {st.session_state.input_AMPTdatasheet["Maximum current (Imp) per input (A)"][st.session_state.AMPT_indexModel]} V")
+            test_In_Current_max = ['In1DCA_1', 'In2DCA_1', 'In1DCA_2', 'In2DCA_2',  
+                                  'In1DCA_3', 'In2DCA_3','In1DCA_4', 'In2DCA_4',  
+                                  'In1DCA_5', 'In2DCA_5','In1DCA_6', 'In2DCA_6']
+            
+            for col in test_In_Current_max:
+                desc = st.session_state.df[col].describe()
+                max_Current_val = desc["max"]
+                
+                # Seuil
+                seuil_in_max_current = st.session_state.input_AMPTdatasheet["Maximum current (Imp) per input (A)"][st.session_state.AMPT_indexModel]
+                
+                # Si la valeur est <= seuil
+                if max_Current_val <= seuil_in_max_current:
+                    symbole = "✅"
+                else:
+                    symbole = "❌"
+            
+                st.write(f"{col} : {int(max_Current_val)} {symbole}")

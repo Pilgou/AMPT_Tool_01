@@ -11,9 +11,11 @@
         "network_type": 700,
         "PV": {
           "power_kwp": 65,
-	  "PV model":"",
+	  "PV Brand": "TrinaSolar",
+	  "PV model":"TSM-440-NEG9RC.27",
 	  "Nb_PV":"136",
-          "optimizer_model": "V900"
+          "optimizer_model": "V750",
+	  "Nb_optimizer":6	
         },
         "BESS": {
 	  "Model":"Pylontech",
@@ -43,9 +45,10 @@
         "network_type": 700,
         "PV": {
           "power_kwp": 65,
-	  "PV model":"",
+	  "Brand" : "TrinaSolar",
+	  "PV model":"TSM-440-NEG9RC.27",
 	  "Nb_PV":"136",
-          "optimizer_model": "V900"
+          "optimizer_model": "V750"
         },
         "BESS": {
 	  "Model":"Pylontech",

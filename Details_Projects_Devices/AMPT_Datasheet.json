@@ -1,20 +1,22 @@
 {
-  "models": ["V850", "V875", "V900", "V925", "V950", "V975", "V1000"],
+  "models": ["V650", "V675", "V700", "V725", "V750"],
   "Electrical": {
     "Input": {
-      "Maximum voltage per input (V)": [1000, 1000, 1000, 1000, 1000, 1000, 1000],
-      "Maximum current (Imp) per input (A)": [12.8, 12.8, 12.8, 12.8, 12.8, 12.8, 12.8],
-      "Maximum short-circuit current (Isc) per input (A)": [13.5, 13.5, 13.5, 13.5, 13.5, 13.5, 13.5],
-      "MPP tracking voltage range (V)": ["190-900", "190-900", "190-900", "190-900", "190-900", "190-900", "190-900"],
-      "Startup voltage per input (V)": [400, 400, 400, 400, 400, 400, 400],
-      "Number of inputs": [2, 2, 2, 2, 2, 2, 2]
+      "Maximum voltage per input (V)": [750, 750, 750, 750, 750],
+      "Maximum current (Imp) per input (A)": [12.8, 12.8, 12.8, 12.8, 12.8],
+      "Maximum short-circuit current (Isc) per input (A)": [13.5, 13.5, 13.5, 13.5, 13.5],
+      "MPP tracking voltage range (V)": ["190-700", "190-700", "190-700", "190-700", "190-700"],
+      "Startup voltage per input (V)": [400, 400, 400, 400, 400],
+      "Number of inputs": [2, 2, 2, 2, 2]
     },
     "Output": {
-      "Output voltage range (V)": ["0-850", "0-875", "0-900", "0-925", "0-950", "0-975", "0-1000"],
-      "Maximum output voltage at full power (V)": [760, 785, 810, 835, 860, 885, 910],
-      "Output voltage at zero power (V)": [850, 875, 900, 925, 950, 975, 1000],
-      "Maximum output current (A)": [13.5, 13.5, 13.5, 13.5, 13.5, 13.5, 13.5],
-      "Maximum continuous output power (kWdc)": [10.2, 10.5, 10.9, 11.2, 11.5, 11.9, 12.2]
+      "Output voltage range (V)": ["0-650", "0-675", "0-700", "0-725", "0-750"],
+      "Maximum output voltage at full power (V)": [560, 585, 610, 635, 660],
+      "Output voltage at zero power (V)": [650, 675, 700, 725, 750],
+      "Maximum output current (A)": [13.5, 13.5, 13.5, 13.5, 13.5],
+      "Maximum continuous output power (kWdc)": [7.5, 7.8, 8.2, 8.5, 8.8],
+      "Efficiency (max / CEC / Euro) (%)": ["99.5 / 99.3 / 99.2", "99.5 / 99.3 / 99.2", "99.5 / 99.3 / 99.2", "99.5 / 99.3 / 99.2", "99.5 / 99.3 / 99.2"]
     }
   }
 }
+

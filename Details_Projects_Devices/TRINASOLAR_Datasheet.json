@@ -1,0 +1,28 @@
+{
+"Models": ["TSM-415 NEG9RC.27", "TSM-420 NEG9RC.27", "TSM-425 NEG9RC.27", "TSM-430 NEG9RC.27", "TSM-435 NEG9RC.27", "TSM-440 NEG9RC.27"],  
+"ELECTRICAL_DATA_STC": {
+    "Peak_Power_Watts_PMAX_Wp": [415, 420, 425, 430, 435, 440],
+    "Power_Tolerance_PMAX_W": ["0/+5","0/+5","0/+5","0/+5","0/+5","0/+5"],
+    "Maximum_Power_Voltage_VMPP_V": [42.1, 42.5, 42.9, 43.2, 43.6, 44.0],
+    "Maximum_Power_Current_IMPP_A": [9.86, 9.89, 9.92, 9.96, 9.99, 10.01],
+    "Open_Circuit_Voltage_VOC_V": [50.1, 50.5, 50.9, 51.4, 51.8, 52.2],
+    "Short_Circuit_Current_ISC_A": [10.50, 10.53, 10.56, 10.59, 10.64, 10.67],
+    "Module_Efficiency_n_m_percent": [20.8, 21.0, 21.3, 21.5, 21.8, 22.0]
+  },
+  "Electrical_characteristics_with_different_power_bin_reference_to_10_percent_Irradiance_ratio": {
+    "Total_Equivalent_Power_PMAX_W": [448, 454, 459, 464, 470, 475],
+    "Maximum_Power_Voltage_VMPP_V": [42.1, 42.5, 42.9, 43.2, 43.6, 44.0],
+    "Maximum_Power_Current_IMPP_A": [10.65, 10.68, 10.71, 10.76, 10.79, 10.81],
+    "Open_Circuit_Voltage_VOC_V": [50.1, 50.5, 50.9, 51.4, 51.8, 52.2],
+    "Short_Circuit_Current_ISC_A": [11.34, 11.37, 11.40, 11.44, 11.49, 11.52],
+    "Irradiance_ratio_rear_front_percent": [10,10,10,10,10,10],
+    "Power_Bifaciality_percent": ["80 +-5 %","80 +-5 %","80 +-5 %","80 +-5 %","80 +-5 %","80 +-5 %"]
+  },
+  "ELECTRICAL_DATA_NOCT": {
+    "Maximum_Power_PMAX_Wp": [316, 320, 324, 328, 332, 335],
+    "Maximum_Power_Voltage_VMPP_V": [39.3, 39.7, 40.0, 40.4, 40.7, 41.0],
+    "Maximum_Power_Current_IMPP_A": [8.03, 8.07, 8.09, 8.11, 8.15, 8.17],
+    "Open_Circuit_Voltage_VOC_V": [47.5, 47.8, 48.2, 48.7, 49.1, 49.4],
+    "Short_Circuit_Current_ISC_A": [8.46, 8.49, 8.51, 8.53, 8.57, 8.60]
+  }
+}

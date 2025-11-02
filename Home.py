@@ -29,14 +29,27 @@ if "input_AMPTdatasheet" not in st.session_state:
 if "output_AMPTdatasheet" not in st.session_state:
     st.session_state.output_AMPTdatasheet = {}
 
-if "indexModel" not in st.session_state:
-    st.session_state.indexModel = 2
+if "AMPT_indexModel" not in st.session_state:
+    st.session_state.AMPT_indexModel = 4
     # --- Charger le JSON AMPT_Datasheet ---
     with open(".\Details_Projects_Devices\AMPT_Datasheet.json", "r") as f:
-        st.session_state.datasheet = json.load(f)
+        st.session_state.AMPT_datasheet = json.load(f)
+
+if "STC_PVdatasheet" not in st.session_state:
+    st.session_state.STC_PVdatasheet = {}
+
 
 if "AMPT_file_loaded" not in st.session_state:
     st.session_state.AMPT_file_loaded = ""
+
+if "PV_indexModel" not in st.session_state:
+    st.session_state.PV_indexModel = 5
+    # --- Charger le JSON AMPT_Datasheet ---
+    with open(".\Details_Projects_Devices\TRINASOLAR_Datasheet.json", "r") as f:
+        st.session_state.PV_datasheet = json.load(f)
+
+if "PV_file_loaded" not in st.session_state:
+    st.session_state.PV_file_loaded = ""
 
 if "EM_file_loaded" not in st.session_state:
     st.session_state.EM_file_loaded = ""
@@ -92,7 +105,7 @@ col1, col2 = st.columns(2)
 #     # st.image(os.path.join(current_path,"images","AMPT.jpg"),width=250)#,width=200)
 #     st.image(".\images\AMPT.jpg",width=250)
 
-tab1, tab2, tab3, tab4, tab5 = st.tabs(["Settings", "Projects", "Optimizers", "Anomalies", "About"])
+tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(["Settings", "Projects", "Optimizers", "PV", "Anomalies", "About"])
 
 with tab1:
 
@@ -190,6 +203,7 @@ with tab2:
         st.markdown(styled_item("Modèle PV", pv['PV model']), unsafe_allow_html=True)
         st.markdown(styled_item("Nb PV", pv['Nb_PV']), unsafe_allow_html=True)
         st.markdown(styled_item("Modèle Optimizer", pv['optimizer_model']), unsafe_allow_html=True)
+        st.markdown(styled_item("Nb optimzer", pv['Nb_optimizer']), unsafe_allow_html=True)
     
         # BESS Section
         bess = st.session_state.project["specifications"]["BESS"]
@@ -208,35 +222,32 @@ with tab2:
     else:
         st.error(f"Projet '{st.session_state.selected_project}' non trouvé dans le fichier JSON.")
 
-# AMPT Datasheet tab               
+# AMPT datasheet tab               
 with tab3:
 
     # --- Extraire la liste des modèles ---
-    models = st.session_state.datasheet["models"]
+    models = st.session_state.AMPT_datasheet["models"]
 
     st.markdown("<h3 style='color:orange;'>⚙️ Select AMPT</h3>", unsafe_allow_html=True)
-    
-    # # --- Sélection par défaut : "V900" ---
-    # default_index = models.index("V900") if "V900" in models else 0
     
     # --- Sélecteur radio horizontal ---
     st.session_state.selected_model = st.radio(
         "Choose model :", 
         models, 
         horizontal=True,
-        index=st.session_state.indexModel,  # 👈 ici le modèle V900 est pré-sélectionné
+        index=st.session_state.AMPT_indexModel,  # 👈 ici le modèle V750 est pré-sélectionné
         key="model_selector"
     )
 
     # --- Trouver l'index du modèle sélectionné ---
-    st.session_state.indexModel = models.index(st.session_state.selected_model)
-    # print(st.session_state.indexModel)
+    st.session_state.AMPT_indexModel = models.index(st.session_state.selected_model)
+    # print(st.session_state.AMPT_indexModel)
 
     # --- Récupérer les données ---
-    st.session_state.input_AMPTdatasheet = st.session_state.datasheet["Electrical"]["Input"]
-    st.session_state.output_AMPTdatasheet = st.session_state.datasheet["Electrical"]["Output"]
-    # print(st.session_state.datasheet["Electrical"]["Input"]["Maximum voltage per input (V)"][st.session_state.indexModel])
-    # print(st.session_state.input_AMPTdatasheet["Maximum voltage per input (V)"][st.session_state.indexModel])
+    st.session_state.input_AMPTdatasheet = st.session_state.AMPT_datasheet["Electrical"]["Input"]
+    st.session_state.output_AMPTdatasheet = st.session_state.AMPT_datasheet["Electrical"]["Output"]
+    # print(st.session_state.AMPT_datasheet["Electrical"]["Input"]["Maximum voltage per input (V)"][st.session_state.AMPT_indexModel])
+    # print(st.session_state.input_AMPTdatasheet["Maximum voltage per input (V)"][st.session_state.AMPT_indexModel])
 
     # --- Affichage stylé ---
     st.markdown(
@@ -260,7 +271,7 @@ with tab3:
     with col1:
         st.markdown("<h4 style='color:#ffa500; text-align:center;'>Input</h4>", unsafe_allow_html=True)
         for key, values in st.session_state.input_AMPTdatasheet.items():
-            value = values[st.session_state.indexModel]
+            value = values[st.session_state.AMPT_indexModel]
             st.markdown(
                 f"""
                 <p style='margin:2px 0;'>
@@ -275,7 +286,7 @@ with tab3:
     with col2:
         st.markdown("<h4 style='color:#ffa500; text-align:center;'>Output</h4>", unsafe_allow_html=True)
         for key, values in st.session_state.output_AMPTdatasheet.items():
-            value = values[st.session_state.indexModel]
+            value = values[st.session_state.AMPT_indexModel]
             st.markdown(
                 f"""
                 <p style='margin:2px 0;'>
@@ -288,12 +299,101 @@ with tab3:
     st.image(os.path.join(current_path,"images","AMPT.jpg"),width=250)#,width=200)
     st.markdown("[AMPT web site](https://www.ampt.com/products/string-optimizers)")
 
+# PV Datasheet tab               
 with tab4:
+
+    # --- Extraire la liste des modèles ---
+    PV_models = st.session_state.PV_datasheet["Models"]
+
+    st.markdown("<h3 style='color:orange;'>⚙️ Select PV</h3>", unsafe_allow_html=True)
+    
+    # --- Sélecteur radio horizontal ---
+    st.session_state.selected_model_PV = st.radio(
+        "Choose model :", 
+        PV_models, 
+        horizontal=True,
+        index=st.session_state.PV_indexModel,  # 👈 ici le modèle  est pré-sélectionné
+        key="model_selector_PV"
+    )
+    
+    # --- Trouver l'index du modèle sélectionné ---
+    st.session_state.PV_indexModel = PV_models.index(st.session_state.selected_model_PV)
+
+    # --- Récupérer les données ---
+    st.session_state.STC_PVdatasheet = st.session_state.PV_datasheet["ELECTRICAL_DATA_STC"]
+    st.session_state.NOCT_PVdatasheet = st.session_state.PV_datasheet["ELECTRICAL_DATA_NOCT"]
+    st.session_state.tenPerCent_PVdatasheet = st.session_state.PV_datasheet["Electrical_characteristics_with_different_power_bin_reference_to_10_percent_Irradiance_ratio"]
+
+
+    # --- Affichage stylé ---
+    st.markdown(
+        f"""
+        <div style="
+            border: 3px solid orange;
+            border-radius: 12px;
+            padding: 20px;
+            background-color: #1e1e1e;
+            margin-top: 20px;">
+            <h3 style="color:orange;">DataSheet : <span style="color:white;">{st.session_state.selected_model_PV}</span></h3>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    # --- Disposition en deux colonnes ---
+    col1, col2 = st.columns(2)
+    # ELECTRICAL_DATA_STC
+    with col1:
+        st.markdown("<h4 style='color:#ffa500; text-align:center;'>STC</h4>", unsafe_allow_html=True)
+        for key, values in st.session_state.STC_PVdatasheet.items():
+            value = values[st.session_state.PV_indexModel]
+            st.markdown(
+                f"""
+                <p style='margin:2px 0;'>
+                    <b style='color:#00B4D8;'>{key}</b> :
+                    <span style='color:#FFFFFF;'>{value}</span>
+                </p>
+                """,
+                unsafe_allow_html=True
+            )
+
+    # "ELECTRICAL_DATA_NOCT"
+    with col2:
+        st.markdown("<h4 style='color:#ffa500; text-align:center;'>NOCT</h4>", unsafe_allow_html=True)
+        for key, values in st.session_state.NOCT_PVdatasheet.items():
+            value = values[st.session_state.PV_indexModel]
+            st.markdown(
+                f"""
+                <p style='margin:2px 0;'>
+                    <b style='color:#00B4D8;'>{key}</b> :
+                    <span style='color:#FFFFFF;'>{value}</span>
+                </p>
+                """,
+                unsafe_allow_html=True
+            )
+
+# "Electrical_characteristics_with_different_power_bin_reference_to_10_percent_Irradiance_ratio": 
+    st.markdown("<h4 style='color:#ffa500; text-align:center;'>With different power bin reference to 10 percent Irradiance ratio</h4>", unsafe_allow_html=True)
+    for key, values in st.session_state.tenPerCent_PVdatasheet.items():
+        value = values[st.session_state.PV_indexModel]
+        st.markdown(
+            f"""
+            <p style='margin:2px 0;'>
+                <b style='color:#00B4D8;'>{key}</b> :
+                <span style='color:#FFFFFF;'>{value}</span>
+            </p>
+            """,
+            unsafe_allow_html=True
+        )
+    st.info("""STC : Irradiance 1000w / m2, cell temperature : 25°C, Air mass AM 1.5   
+            NOCT : Irradiance at 800w / m2, ambiant temperatue : 20°C, wind speed : 1m / s""")
+
+with tab5:
     st.write("Anomalies recorded")
     
     ar.AnomaliesList()
 
-with tab5:
+with tab6:
     with st.expander("Python scrips description"):
         st.markdown(
             """
