@@ -1,226 +1,25 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Oct 30 16:52:03 2025
-
-@author: Mamie
-"""
-
-# import streamlit as st
-# import streamlit.components.v1 as components
-# from pathlib import Path
-
-# svg_path = Path("./SVG/solar_layout_clean.svg")
-# svg = svg_path.read_text(encoding="utf-8")
-
-# components.html(svg, height=1000)
-
 import streamlit as st
-import streamlit.components.v1 as components
 
-svg = """
-<svg xmlns="http://www.w3.org/2000/svg" width="3000" height="1200" viewBox="0 0 3000 1200">
-<style>text.label{font-family:Arial, sans-serif; font-size:14px; fill:#222}</style>
-<g transform="translate(80,100)">
-<rect x="0" y="0" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="56" y="0" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="112" y="0" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="0" y="36" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="56" y="36" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="112" y="36" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="0" y="72" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="56" y="72" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="112" y="72" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="0" y="108" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="56" y="108" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="112" y="108" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-</g>
-<rect x="158.0" y="75" width="6" height="25" fill="black"/>
-<text x="161.0" y="258" text-anchor="middle" class="label">SCP-N / Array 1 / 11 modules</text>
-<g transform="translate(442,100)">
-<rect x="0" y="0" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="56" y="0" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="112" y="0" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="0" y="36" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="56" y="36" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="112" y="36" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="0" y="72" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="56" y="72" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="112" y="72" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="0" y="108" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="56" y="108" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="112" y="108" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-</g>
-<rect x="520.0" y="75" width="6" height="25" fill="black"/>
-<text x="523.0" y="258" text-anchor="middle" class="label">SCP-N / Array 2 / 11 modules</text>
-<g transform="translate(804,100)">
-<rect x="0" y="0" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="56" y="0" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="112" y="0" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="0" y="36" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="56" y="36" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="112" y="36" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="0" y="72" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="56" y="72" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="112" y="72" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="0" y="108" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="56" y="108" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="112" y="108" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-</g>
-<rect x="882.0" y="75" width="6" height="25" fill="black"/>
-<text x="885.0" y="258" text-anchor="middle" class="label">SCP-N / Array 3 / 11 modules</text>
-<g transform="translate(1166,100)">
-<rect x="0" y="0" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="56" y="0" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="112" y="0" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="0" y="36" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="56" y="36" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="112" y="36" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="0" y="72" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="56" y="72" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="112" y="72" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="0" y="108" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="56" y="108" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="112" y="108" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-</g>
-<rect x="1244.0" y="75" width="6" height="25" fill="black"/>
-<text x="1247.0" y="258" text-anchor="middle" class="label">SCP-N / Array 4 / 11 modules</text>
-<g transform="translate(1528,100)">
-<rect x="0" y="0" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="56" y="0" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="112" y="0" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="0" y="36" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="56" y="36" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="112" y="36" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="0" y="72" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="56" y="72" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="112" y="72" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="0" y="108" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="56" y="108" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="112" y="108" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-</g>
-<rect x="1606.0" y="75" width="6" height="25" fill="black"/>
-<text x="1609.0" y="258" text-anchor="middle" class="label">SCP-N / Array 5 / 12 modules</text>
-<g transform="translate(1890,100)">
-<rect x="0" y="0" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="56" y="0" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="112" y="0" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="0" y="36" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="56" y="36" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="112" y="36" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="0" y="72" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="56" y="72" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="112" y="72" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="0" y="108" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="56" y="108" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="112" y="108" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-</g>
-<rect x="1968.0" y="75" width="6" height="25" fill="black"/>
-<text x="1971.0" y="258" text-anchor="middle" class="label">SCP-N / Array 6 / 12 modules</text>
-<g transform="translate(140,600)">
-<rect x="0" y="0" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="56" y="0" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="112" y="0" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="0" y="36" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="56" y="36" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="112" y="36" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="0" y="72" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="56" y="72" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="112" y="72" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="0" y="108" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="56" y="108" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="112" y="108" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-</g>
-<rect x="218.0" y="575" width="6" height="25" fill="black"/>
-<text x="221.0" y="758" text-anchor="middle" class="label">SCP-S / Array 7 / 12 modules</text>
-<g transform="translate(502,600)">
-<rect x="0" y="0" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="56" y="0" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="112" y="0" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="0" y="36" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="56" y="36" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="112" y="36" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="0" y="72" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="56" y="72" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="112" y="72" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="0" y="108" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="56" y="108" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="112" y="108" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-</g>
-<rect x="580.0" y="575" width="6" height="25" fill="black"/>
-<text x="583.0" y="758" text-anchor="middle" class="label">SCP-S / Array 8 / 12 modules</text>
-<g transform="translate(864,600)">
-<rect x="0" y="0" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="56" y="0" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="112" y="0" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="0" y="36" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="56" y="36" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="112" y="36" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="0" y="72" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="56" y="72" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="112" y="72" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="0" y="108" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="56" y="108" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="112" y="108" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-</g>
-<rect x="942.0" y="575" width="6" height="25" fill="black"/>
-<text x="945.0" y="758" text-anchor="middle" class="label">SCP-S / Array 9 / 11 modules</text>
-<g transform="translate(1226,600)">
-<rect x="0" y="0" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="56" y="0" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="112" y="0" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="0" y="36" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="56" y="36" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="112" y="36" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="0" y="72" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="56" y="72" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="112" y="72" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="0" y="108" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="56" y="108" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="112" y="108" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-</g>
-<rect x="1304.0" y="575" width="6" height="25" fill="black"/>
-<text x="1307.0" y="758" text-anchor="middle" class="label">SCP-S / Array 10 / 11 modules</text>
-<g transform="translate(1588,600)">
-<rect x="0" y="0" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="56" y="0" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="112" y="0" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="0" y="36" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="56" y="36" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="112" y="36" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="0" y="72" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="56" y="72" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="112" y="72" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="0" y="108" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="56" y="108" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="112" y="108" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-</g>
-<rect x="1666.0" y="575" width="6" height="25" fill="black"/>
-<text x="1669.0" y="758" text-anchor="middle" class="label">SCP-S / Array 11 / 11 modules</text>
-<g transform="translate(1950,600)">
-<rect x="0" y="0" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="56" y="0" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="112" y="0" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="0" y="36" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="56" y="36" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="112" y="36" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="0" y="72" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="56" y="72" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="112" y="72" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="0" y="108" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="56" y="108" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-<rect x="112" y="108" width="50" height="30" fill="none" stroke="#444" stroke-width="1.2"/>
-</g>
-<rect x="2028.0" y="575" width="6" height="25" fill="black"/>
-<text x="2031.0" y="758" text-anchor="middle" class="label">SCP-S / Array 12 / 11 modules</text>
-<text x="40" y="1160" style="font-size:12px; fill:#777; font-family:Arial;">SVG généré automatiquement à partir du schéma original — fond transparent.</text>
-</svg>
+with open("./SVG/solar_layout_clean05.svg", "r") as f:
+    svg_code = f.read()
+
+
+html_code = f"""
+<div style="position: relative; display: inline-block;">
+
+  <div style="position: absolute; top: 100px; left: 250px;
+              width: 150px; height: 120px;
+              border: 3px solid red; background-color: rgba(255,0,0,0.2);"></div>
+  {svg_code}
+</div>
+
+<!-- Texte sous le rectangle -->
+  <div style="position: absolute; top: 230px; left: 250px; 
+              width: 150px; text-align: center; 
+              color: red; font-weight: bold; font-family: Arial; font-size: 16px;">
+    Zone critique
+  </div>
 """
 
-components.html(
-    f"""
-    <div style="width:100vw; height:100vh; margin:0; padding:0; overflow:hidden;">
-      {svg}
-    </div>
-    """,
-    height=800,
-)
+st.markdown(html_code, unsafe_allow_html=True)
+

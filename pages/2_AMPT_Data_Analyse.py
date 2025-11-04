@@ -549,8 +549,8 @@ with tab2:
             #                 unsafe_allow_html=True
             #             )
 
-            st.write("Test des Valeurs limites")
-            col13, col14 = st.columns(2)
+            st.write("Comparison with datasheet limits")
+            col13, col14, col15 = st.columns(3)
             
 
             with col13:
@@ -576,7 +576,7 @@ with tab2:
 
             with col14:
 
-                st.write(f"Max Current / output : {st.session_state.output_AMPTdatasheet["Maximum output current (A)"][st.session_state.AMPT_indexModel]} V")
+                st.write(f"Max Current / output : {st.session_state.output_AMPTdatasheet["Maximum output current (A)"][st.session_state.AMPT_indexModel]} A")
                 test_Out_Current_max = ['OutDCA_1', 'OutDCA_2', 'OutDCA_3', 'OutDCA_4',  
                                       'OutDCA_5', 'OutDCA_6']
                 
@@ -595,6 +595,25 @@ with tab2:
                 
                     st.write(f"{col} : {int(max_Out_Current_val)} {symbole}")
 
+            with col15:
+
+                st.write(f"Max Power / output : {st.session_state.output_AMPTdatasheet["Maximum continuous output power (kWdc)"][st.session_state.AMPT_indexModel]} Kw")
+                test_Out_Power_max = ['Out_Power_1', 'Out_Power_2', 'Out_Power_3', 'Out_Power_4',  
+                                      'Out_Power_5', 'Out_Power_6']
+                for col in test_Out_Power_max:
+                    desc = st.session_state.df[col].describe()
+                    max_Out_Power_val = desc["max"]
+                    
+                    # Seuil
+                    seuil_out_max_power = st.session_state.output_AMPTdatasheet["Maximum continuous output power (kWdc)"][st.session_state.AMPT_indexModel]
+
+                    # Si la valeur est <= seuil
+                    if max_Out_Power_val/1000 <= seuil_out_max_power:
+                        symbole = "✅"
+                    else:
+                        symbole = "❌"
+                
+                    st.write(f"{col} : {int(max_Out_Power_val)} {symbole}")
 
     
 with tab3:
@@ -768,7 +787,7 @@ with tab3:
     if st.session_state.checkbox_Anomalies_dftab_3:
         displayExpanderAMPT_Datasheet()
         displayExpanderPV_Datasheet()
-        st.write("Test des Valeurs limites")
+        st.write("Comparison with datasheet limits")
         col15, col16, = st.columns(2)
         
         with col15:
@@ -795,7 +814,7 @@ with tab3:
 
         with col16:
 
-            st.write(f"Max current / input : {st.session_state.input_AMPTdatasheet["Maximum current (Imp) per input (A)"][st.session_state.AMPT_indexModel]} V")
+            st.write(f"Max current / input : {st.session_state.input_AMPTdatasheet["Maximum current (Imp) per input (A)"][st.session_state.AMPT_indexModel]} A")
             test_In_Current_max = ['In1DCA_1', 'In2DCA_1', 'In1DCA_2', 'In2DCA_2',  
                                   'In1DCA_3', 'In2DCA_3','In1DCA_4', 'In2DCA_4',  
                                   'In1DCA_5', 'In2DCA_5','In1DCA_6', 'In2DCA_6']
